@@ -1,0 +1,52 @@
+.user{
+  border: 1px solid #0156ff;
+  border-radius: 20px;
+
+  margin: 20px 0px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  grid-template-areas: 
+  'a d'
+  'f d';
+}
+.avatar{
+  grid-area: a;
+  text-align: center;
+}
+.avatar img{
+  height: 100px;
+}
+.follow{
+  grid-area: f; 
+}
+.user button{
+  width: 100px;
+  margin: auto;
+}
+.description{
+  padding: 10px;
+
+  grid-area: d;
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  grid-template-areas: 
+  'u l'
+  's l';
+}
+.username{
+  font-size: 20px;
+  font-weight: 500;
+  grid-area: u;
+}
+.location{
+  grid-area: l;
+}
+.status{
+  grid-area: s;
+  display: flex;
+  align-items: flex-end;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow:ellipsis;
+}

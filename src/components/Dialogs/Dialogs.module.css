@@ -1,0 +1,13 @@
+.dialogs{
+  display: grid;
+  grid-template-areas: 'd m';
+  grid-template-columns: 2fr 10fr;
+}
+
+.dialogs-list{
+  grid-area: 'd';
+}
+
+.messages-list{
+  grid-area: 'm';
+}

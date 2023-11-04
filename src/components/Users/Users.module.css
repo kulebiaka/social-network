@@ -1,0 +1,14 @@
+.container{
+  width: 900px;
+  margin: auto;
+}
+.showMore_btn{
+  display: block;
+  margin: auto;
+}
+.users{
+  padding: 20px
+}
+h4{
+  text-align: center;
+}
