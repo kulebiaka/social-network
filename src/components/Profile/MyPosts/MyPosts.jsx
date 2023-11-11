@@ -18,7 +18,7 @@ const MyPosts = (props) => {
   let onNewPostChange = (e) => {
     dispatch(updateNewPostText(e.target.value))
   }
-  debugger
+  
   return (
     <div className={s.posts_block}>
       <h3>My posts</h3>

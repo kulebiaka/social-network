@@ -9,6 +9,9 @@ import News from './components/News/News'
 import Music from './components/Music/Music'
 import Settings from './components/Settings/Settings'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Preloader from './components/common/Preloader';
+import Error from './components/common/Error';
+// import ProfileWithRouter from './components/Profile/ProfileWithRouter';
 
 const App = (props: any) => {
   // debugger;
@@ -19,12 +22,13 @@ const App = (props: any) => {
         <Navbar /*state={props.store.getState().sidebar}*/ />
         <div  className='app-wrapper-content'>
           <Routes>
-            <Route path='/profile' element={<Profile />} />
+            <Route path='/profile/:userId' element={<Profile />} />
             <Route path='/dialogs/*' element={<Dialogs />} />
             <Route path='/users' element={<Users />} />
             <Route path='/news' element={<News />} />
             <Route path='/music' element={<Music />} />
             <Route path='/settings' element={<Settings />} />
+            <Route path='/*' element={<Error />} />
           </Routes>
         </div>
       </div>

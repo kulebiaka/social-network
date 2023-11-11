@@ -8,7 +8,8 @@ let initialState = {
     { id: 3, message: 'b', likesCount: 23 },
     { id: 4, message: 'c', likesCount: 23 },
   ],
-  newPostText: ''
+  newPostText: '',
+  isFetching: false
 }
 
 const profileSlice = createSlice({
@@ -27,10 +28,16 @@ const profileSlice = createSlice({
     updateNewPostText(state, action){
       state.newPostText = action.payload
     },
+    setUserProfile(state, action){
+      state.user = {...action.payload}
+    },
+    setIsFetching(state, action){
+      state.isFetching = action.payload
+    },
   }
 })
 
 
-export const {addPost, updateNewPostText} = profileSlice.actions
+export const {addPost, updateNewPostText, setUserProfile, setIsFetching} = profileSlice.actions
 
 export default profileSlice.reducer;

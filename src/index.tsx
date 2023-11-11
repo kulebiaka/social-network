@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-// import { addPost, sendMessage, updateNewMessagetText, updateNewPostText, subscribe } from './redux/state';
 import store from './redux/store'
 import { Provider } from 'react-redux';
 
@@ -11,11 +10,11 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 export let rerenderEntireTree = () => {
   // debugger;
   root.render(
-      <React.StrictMode>
+      // <React.StrictMode>
         <Provider store={store}> 
           <App store={store}/>
         </Provider> 
-      </React.StrictMode>
+      // </React.StrictMode>
   );
 }
 
