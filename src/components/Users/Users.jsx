@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { follow, unfollow, setUsers, setCurrentPage, setAllUsersCount, setIsFetching, clearToInitialState } from "../../redux/usersReducer";
 import axios from "axios";
 import Preloader from "../common/Preloader";
+import { usersAPI } from "../../API/api";
 
 let gotFromBackend = [
   {id:5, name:'Alex', followed: true, status:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', location:{country:'Russia', city:'Moscow'}},
@@ -21,10 +22,11 @@ const Users = (props) => {
   let state = useSelector(state => state.usersPage)
 
   useEffect(() => {
-    axios.get(`https://social-network.samuraijs.com/api/1.0/users`)
-      .then(response => {
+    // axios.get(`https://social-network.samuraijs.com/api/1.0/users`)
+    usersAPI.getUsersCount()
+      .then(count => {
         // dispatch(setUsers(response.data.items))
-        dispatch(setAllUsersCount(response.data.totalCount))
+        dispatch(setAllUsersCount(count))
       })
     console.log('mounted')
     return () => {dispatch(clearToInitialState())}
@@ -32,14 +34,15 @@ const Users = (props) => {
 
   useEffect(() => {
     dispatch(setIsFetching(true))
-    axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${state.currentPage}&count=${state.pageSize}`, {withCredentials: true})
-      .then(response => {
+    // axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${state.currentPage}&count=${state.pageSize}`, {withCredentials: true})
+    usersAPI.getUsers(state.currentPage, state.pageSize)
+      .then(users => {
         dispatch(setIsFetching(false))
-        dispatch(setUsers(response.data.items))
+        dispatch(setUsers(users))
       })
   }, [state.currentPage])
 
-  let usersComponents = state.users.map(user => (<UserItem user={user} key={user.id}/>)) 
+  let usersComponents = state.users.map(user => (<UserItem inFollowingProgress={state.inFollowingProgress} user={user} key={user.id}/>)) 
 
   return (
     <div className={s.container}>

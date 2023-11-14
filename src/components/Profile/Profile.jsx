@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUserProfile, setIsFetching } from '../../redux/profileReducer';
 import Preloader from '../common/Preloader';
 import { useParams } from 'react-router-dom';
+import { profileAPI } from '../../API/api';
 
 const Profile = (props) => {
 
@@ -18,10 +19,11 @@ const Profile = (props) => {
 
   const setProfile = () => {
     dispatch(setIsFetching(true))
-    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-      .then(response => {
-        console.log(response)
-        dispatch(setUserProfile(response.data))
+    // axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
+    profileAPI.getProfile(userId)
+      .then(data => {
+        console.log(data)
+        dispatch(setUserProfile(data))
         dispatch(setIsFetching(false))
       })
   }

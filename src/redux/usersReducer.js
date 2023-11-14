@@ -11,7 +11,8 @@ let initialState = {
     pageSize: 10, 
     currentPage: 1, 
     allUsersCount: 0,
-    isFetching: false
+    isFetching: false,
+    inFollowingProgress: []
 }
 
 let usersSlice = createSlice({
@@ -33,6 +34,13 @@ let usersSlice = createSlice({
         }
         return user
       })
+    },
+    toggleInFollowingProgress(state, action){
+      if(action.payload.isFetching){
+        state.inFollowingProgress.push(action.payload.id)
+      }else{
+        state.inFollowingProgress = state.inFollowingProgress.filter(value => value != action.payload.id)
+      }
     },
     setUsers(state, action){
       if(state.users.length === 0){
@@ -56,6 +64,6 @@ let usersSlice = createSlice({
   }
 })
 
-export const {follow, unfollow, setUsers, setCurrentPage, setAllUsersCount, setIsFetching, clearToInitialState} = usersSlice.actions
+export const {follow, unfollow, toggleInFollowingProgress, setUsers, setCurrentPage, setAllUsersCount, setIsFetching, clearToInitialState} = usersSlice.actions
 
 export default usersSlice.reducer

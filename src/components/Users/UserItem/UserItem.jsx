@@ -1,36 +1,43 @@
 import React from "react";
 import s from './UserItem.module.css'
-import { useDispatch } from "react-redux";
-import {follow, unfollow} from "./../../../redux/usersReducer"
+import { useDispatch, useSelector } from "react-redux";
+import {follow, toggleInFollowingProgress, unfollow} from "./../../../redux/usersReducer"
 import { NavLink } from "react-router-dom";
 import axios from "axios";
+import { usersAPI } from "../../../API/api";
 
 const UserItem = (props) => {
 
   let dispatch = useDispatch()
 
   let onFollowClick = () => {
-    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${props.user.id}`, {}, {
-      withCredentials: true,
-      headers:{
-        'API-KEY': '16d4c253-80d5-4183-b659-e3879f448d28'
-      }
-    })
+    // axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${props.user.id}`, {}, {
+    //   withCredentials: true,
+    //   headers:{
+    //     'API-KEY': '16d4c253-80d5-4183-b659-e3879f448d28'
+    //   }
+    // })
+    dispatch(toggleInFollowingProgress({isFetching: true, id: props.user.id}))
+    usersAPI.follow(props.user.id)
       .then((response) => {
         console.log(response.data)
         dispatch(follow(props.user.id))
+        dispatch(toggleInFollowingProgress({isFetching: false, id: props.user.id}))
       })
   }
   let onUnfollowClick = () => {
-    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${props.user.id}`, {
-      withCredentials: true,
-      headers:{
-        'API-KEY': '16d4c253-80d5-4183-b659-e3879f448d28'
-      },
-    })
+    // axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${props.user.id}`, {
+    //   withCredentials: true,
+    //   headers:{
+    //     'API-KEY': '16d4c253-80d5-4183-b659-e3879f448d28'
+    //   },
+    // })
+    dispatch(toggleInFollowingProgress({isFetching: true, id: props.user.id}))
+    usersAPI.unfollow(props.user.id)
       .then((response) => {
         console.log(response.data)
         dispatch(unfollow(props.user.id))
+        dispatch(toggleInFollowingProgress({isFetching: false, id: props.user.id}))
       })
   }
 
@@ -42,8 +49,14 @@ const UserItem = (props) => {
     </NavLink>
 
     {props.user.followed ? 
-      <button className={s.follow} onClick={onUnfollowClick}>Unfollow</button>
-    : <button className={s.follow} onClick={onFollowClick}>Follow</button>}
+      <button disabled={props.inFollowingProgress.includes(props.user.id)}
+      className={s.follow} onClick={onUnfollowClick}>
+        Unfollow
+      </button>: 
+      <button disabled={props.inFollowingProgress.includes(props.user.id)}
+      className={s.follow} onClick={onFollowClick}>
+        Follow
+      </button>}
   
     <div className={s.description}>
       <div className={s.username}>{props.user.name}</div>
