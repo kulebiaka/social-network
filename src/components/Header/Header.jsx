@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import s from './Header.module.css';
 import axios from 'axios';
-import { setAuthUserData } from '../../redux/authReducer';
+import { setAuthUserData, setUserIfLoggedIn } from '../../redux/authReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { authAPI } from '../../API/api';
 
 const Header = () => {
 
@@ -11,12 +12,7 @@ const Header = () => {
     let state = useSelector(state => state.authSlice)
 
     useEffect(() => {
-        axios.get('https://social-network.samuraijs.com/api/1.0/auth/me', { withCredentials: true })
-            .then(response => {
-                if(response.data.resultCode === 0){
-                    dispatch(setAuthUserData(response.data.data))
-                }
-            })
+        dispatch(setUserIfLoggedIn())
     }, [])
 
     return <header className={s.header}>

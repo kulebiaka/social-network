@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import UserItem from "./UserItem/UserItem";
 import s from "./Users.module.css"
 import { useDispatch, useSelector } from "react-redux";
-import { follow, unfollow, setUsers, setCurrentPage, setAllUsersCount, setIsFetching, clearToInitialState } from "../../redux/usersReducer";
+import { setCurrentPage, setAllUsersCount, clearToInitialState, getUsers, getAllUsersCount } from "../../redux/usersReducer";
 import axios from "axios";
 import Preloader from "../common/Preloader";
 import { usersAPI } from "../../API/api";
@@ -22,27 +22,15 @@ const Users = (props) => {
   let state = useSelector(state => state.usersPage)
 
   useEffect(() => {
-    // axios.get(`https://social-network.samuraijs.com/api/1.0/users`)
-    usersAPI.getUsersCount()
-      .then(count => {
-        // dispatch(setUsers(response.data.items))
-        dispatch(setAllUsersCount(count))
-      })
-    console.log('mounted')
+    dispatch(getAllUsersCount())
     return () => {dispatch(clearToInitialState())}
   }, [])
 
   useEffect(() => {
-    dispatch(setIsFetching(true))
-    // axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${state.currentPage}&count=${state.pageSize}`, {withCredentials: true})
-    usersAPI.getUsers(state.currentPage, state.pageSize)
-      .then(users => {
-        dispatch(setIsFetching(false))
-        dispatch(setUsers(users))
-      })
+    dispatch(getUsers(state.currentPage, state.pageSize))
   }, [state.currentPage])
 
-  let usersComponents = state.users.map(user => (<UserItem inFollowingProgress={state.inFollowingProgress} user={user} key={user.id}/>)) 
+  let usersComponents = state.users.map(user => (<UserItem inFollowingProgress={state.inFollowingProgress} user={user} key={user.id}/>))
 
   return (
     <div className={s.container}>

@@ -2,11 +2,6 @@ import axios from "axios";
 
 const baseURL = 'https://social-network.samuraijs.com/api/1.0/'
 
-// export async function getUsers(currentPage, pageSize){
-//   return axios.get(`${baseURL}users?page=${currentPage}&count=${pageSize}`, {withCredentials: true})
-//     .then(response => response.data.items)
-// }
-
 let server = axios.create({
   baseURL,
   withCredentials: true,
@@ -36,5 +31,11 @@ export const profileAPI = {
   async getProfile(id){
     return server.get(`profile/${id}`)
       .then(response => response.data)
+  }
+}
+
+export const authAPI = {
+  async isUserLoggedIn(){
+    return server.get('auth/me').then(response => response.data)
   }
 }

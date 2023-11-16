@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { profileAPI } from "../API/api"
 
 
 let initialState = {
@@ -37,6 +38,15 @@ const profileSlice = createSlice({
   }
 })
 
+export const getProfile = (id) => (dispatch) => {
+  dispatch(setIsFetching(true))
+  profileAPI.getProfile(id)
+      .then(data => {
+        console.log(data)
+        dispatch(setUserProfile(data))
+        dispatch(setIsFetching(false))
+      })
+}
 
 export const {addPost, updateNewPostText, setUserProfile, setIsFetching} = profileSlice.actions
 

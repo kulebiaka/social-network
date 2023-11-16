@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { authAPI } from "../API/api"
 
 let initialState = {
   id: null,
@@ -10,8 +11,8 @@ let initialState = {
 const authSlice = createSlice({
   name: 'authSlice',
   initialState,
-  reducers:{
-    setAuthUserData(state, action){
+  reducers: {
+    setAuthUserData(state, action) {
       return {
         ...action.payload,
         isAuth: true
@@ -19,6 +20,15 @@ const authSlice = createSlice({
     }
   }
 })
+
+export const setUserIfLoggedIn = () => (dispatch) => {
+  authAPI.isUserLoggedIn()
+    .then(response => {
+      if (response.resultCode === 0) {
+        dispatch(setAuthUserData(response.data))
+      }
+    })
+}
 
 export const { setAuthUserData } = authSlice.actions
 
