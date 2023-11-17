@@ -10,14 +10,15 @@ let initialState = {
     { id: 4, message: 'c', likesCount: 23 },
   ],
   newPostText: '',
-  isFetching: false
+  isFetching: false,
+  status: '',
 }
 
 const profileSlice = createSlice({
-  name:'profilePage',
+  name: 'profilePage',
   initialState,
   reducers: {
-    addPost(state){
+    addPost(state) {
       let newPost = {
         id: (state.posts.length + 1),
         message: state.newPostText,
@@ -26,28 +27,47 @@ const profileSlice = createSlice({
       state.newPostText = ''
       state.posts.push(newPost)
     },
-    updateNewPostText(state, action){
+    updateNewPostText(state, action) {
       state.newPostText = action.payload
     },
-    setUserProfile(state, action){
-      state.user = {...action.payload}
+    setUserProfile(state, action) {
+      state.user = { ...action.payload }
     },
-    setIsFetching(state, action){
+    setIsFetching(state, action) {
       state.isFetching = action.payload
     },
+    setStatus(state, action) {
+      state.status = action.payload
+    }
   }
 })
 
 export const getProfile = (id) => (dispatch) => {
   dispatch(setIsFetching(true))
   profileAPI.getProfile(id)
-      .then(data => {
-        console.log(data)
-        dispatch(setUserProfile(data))
-        dispatch(setIsFetching(false))
-      })
+    .then(data => {
+      console.log(data)
+      dispatch(setUserProfile(data))
+      dispatch(setIsFetching(false))
+    })
 }
 
-export const {addPost, updateNewPostText, setUserProfile, setIsFetching} = profileSlice.actions
+export const getStatus = (id) => (dispatch) => {
+  profileAPI.getStatus(id)
+    .then(response => {
+      console.log(response)
+      dispatch(setStatus(response.data))
+    })
+}
+
+export const setNewStatus = (status) => (dispatch) => {
+  profileAPI.putNewStatus(status)
+    .then(response => {
+      console.log(response.data)
+    })
+}
+
+
+export const { addPost, updateNewPostText, setUserProfile, setIsFetching, setStatus } = profileSlice.actions
 
 export default profileSlice.reducer;

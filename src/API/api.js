@@ -31,7 +31,14 @@ export const profileAPI = {
   async getProfile(id){
     return server.get(`profile/${id}`)
       .then(response => response.data)
+  },
+  async getStatus(id){
+    return server.get(`profile/status/${id}`)
+  },
+  async putNewStatus(status){
+    return server.put(`profile/status`, {status})
   }
+
 }
 
 export const authAPI = {
