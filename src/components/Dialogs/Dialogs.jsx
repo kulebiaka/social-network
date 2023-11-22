@@ -53,4 +53,19 @@ const Dialogs = (props) => {
   )
 }
 
+// const addMessageForm = (props) => {
+//   const sendMessage = () => {
+//     dispatch(sendMessage())
+//   }
+//   return(<form onSubmit={sendMessage}>
+//     <textarea
+//       // ref={newMessage}
+//       placeholder='Enter your message' 
+//       // value={state.newMessageText}
+//       // onChange={onNewMessageChange} 
+//     />
+//     <button>Send message</button>
+//   </form>)
+// }
+
 export default Dialogs;

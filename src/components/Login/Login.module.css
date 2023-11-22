@@ -1,0 +1,17 @@
+.container{
+  display: grid;
+  justify-content: center;
+}
+.loginForm{
+  width: 350px;
+}
+.fieldContainer{
+  margin: 10px 0px;
+}
+.error{
+  display: inline;
+  color: red
+}
+.submit{
+  text-align: right;
+}

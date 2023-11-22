@@ -20,7 +20,7 @@ const App = (props: any) => {
     <Router>
       <div className='app-wrapper'>
         <Header />
-        <Navbar /*state={props.store.getState().sidebar}*/ />
+        <Navbar />
         <div  className='app-wrapper-content'>
           <Routes>
             <Route path='/login' element={<Login />}/>

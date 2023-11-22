@@ -44,5 +44,12 @@ export const profileAPI = {
 export const authAPI = {
   async isUserLoggedIn(){
     return server.get('auth/me').then(response => response.data)
-  }
+  },
+  async login(form){
+    return server.post('auth/login', form).then(response => {
+      console.log(response)
+      return response.data
+    })
+  },
 }
+
