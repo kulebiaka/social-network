@@ -12,11 +12,11 @@ const Dialogs = (props) => {
   let state = useSelector(state => ({ ...state.dialogsPage, isAuth: state.authSlice.isAuth }))
   let navigate = useNavigate()
 
-  // useEffect(() => {
-  //   if (!state.isAuth) {
-  //     navigate('/login')
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (state.isAuth === false) {
+      navigate('/login')
+    }
+  }, [])
 
   let dialogsComponents = state.dialogs.map((d) => (<DialogItem userName={d.userName} id={d.id} />))
   let messagesComponents = state.messages.map(m => (<Message message={m.message} avatar={m.avatar} />))

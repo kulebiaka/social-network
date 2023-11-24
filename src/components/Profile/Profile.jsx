@@ -22,9 +22,15 @@ const Profile = (props) => {
     //   return
     // }
 
+    if(userId === null) return
+
     dispatch(getStatus(userId))
     dispatch(getProfile(userId))
   }, [userId])
+
+  if(!state){
+    return <Preloader />
+  }
 
 
   return (
