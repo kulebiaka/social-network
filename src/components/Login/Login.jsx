@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import s from './Login.module.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { updateField } from '../../redux/formReducer';
 import { authAPI } from '../../API/api';
+import { logIn, setUserIfLoggedIn } from '../../redux/authReducer';
+import { useNavigate } from 'react-router-dom';
+
 
 const Login = () => {
 
-  let state = useSelector(state => state.authSlice)
+  const state = useSelector(state => state.authSlice)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(state.isAuth) navigate(`/profile/${state.id}`)
+  },)
 
   return (<div className={s.container}>
     <LoginForm />
@@ -17,7 +24,7 @@ const Login = () => {
 const LoginForm = () => {
 
   const dispatch = useDispatch();
-  const form = useSelector(state => state.form);
+  const navigate = useNavigate()
 
   const loginFormValidation = values => {
     const errors = {};
@@ -35,27 +42,28 @@ const LoginForm = () => {
   }
 
   const onLoginFormSubmit = (values, { setSubmitting }) => {
-    authAPI.login(values)
+    // authAPI.login(values)
+    //   .then(response => {
+    //     if (response.resultCode === 0){
+    //       dispatch(setUserIfLoggedIn())
+    //     }
+    //   })
+    dispatch(logIn(values))
       .then(response => {
-        if (response.resultCode !== 0) console.log('something went wrong')
         setSubmitting(false);
+        if (response.resultCode === 0) {
+          navigate('/profile')
+        }
       })
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-    }, 400);
   }
 
-  // const handleChange = (field) => (evt) => {
-  //   dispatch(updateField({field, value: evt.target.value}))
-  // }
 
   return (<div className={s.loginForm}>
     <Formik
       initialValues={{
-      email: '',
-      password: '',
-      rememberMe: false,
-      // errors: {}
+        email: '',
+        password: '',
+        rememberMe: false,
       }}
       validate={loginFormValidation}
       onSubmit={onLoginFormSubmit}
@@ -63,16 +71,16 @@ const LoginForm = () => {
       {({ isSubmitting }) => (
         <Form>
           <div className={s.fieldContainer}>
-            <Field type="email" name="email" placeholder='Enter your email' className={s.field}/>
-            <ErrorMessage name="email" component="div" className={s.error}/>
+            <Field type="email" name="email" placeholder='Enter your email' className={s.field} />
+            <ErrorMessage name="email" component="div" className={s.error} />
           </div>
           <div className={s.fieldContainer}>
-            <Field type="password" name="password" placeholder='Enter your password' className={s.field}/>
-            <ErrorMessage name="password" component="div" className={s.error}/>
+            <Field type="password" name="password" placeholder='Enter your password' className={s.field} />
+            <ErrorMessage name="password" component="div" className={s.error} />
           </div>
           <div className={s.fieldContainer}>
             <label htmlFor="rememberMe">Remember me</label>
-            <Field type="checkbox" name="rememberMe" className={s.field}/>
+            <Field type="checkbox" name="rememberMe" className={s.field} />
           </div>
           <button type="submit" disabled={isSubmitting} className={s.submit}>
             Submit

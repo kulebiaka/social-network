@@ -24,21 +24,18 @@ const dialogsSlice = createSlice({
   name: 'dialogsPage',
   initialState,
   reducers: {
-    sendMessage(state){
+    sendMessage(state, action){
       let newMessage = {
         id: (state.messages.length + 1),
-        message: state.newMessageText,
+        message: action.payload,
         avatar: "https://letsenhance.io/static/66c1b6abf8f7cf44c19185254d7adb0c/28ebd/AiArtBefore.jpg"
       }
-      state.newMessageText = '';
+      // state.newMessageText = '';
       state.messages.push(newMessage)
     },
-    updateNewMessageText(state, action){
-      state.newMessageText = action.payload
-    }
   }
 })
 
-export const { sendMessage, updateNewMessageText } = dialogsSlice.actions
+export const { sendMessage } = dialogsSlice.actions
 
 export default dialogsSlice.reducer

@@ -51,5 +51,8 @@ export const authAPI = {
       return response.data
     })
   },
+  async logOut(){
+    return server.delete('auth/login')
+  }
 }
 

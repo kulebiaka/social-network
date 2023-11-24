@@ -2,33 +2,24 @@ import React, { useEffect } from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import { updateNewMessageText, sendMessage } from '../../redux/dialogsReducer';
+import { sendMessage } from '../../redux/dialogsReducer';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Form, Formik, Field } from 'formik';
 
 const Dialogs = (props) => {
 
-  let state = useSelector(state => ({...state.dialogsPage, isAuth: state.authSlice.isAuth}))
-  let dispatch = useDispatch()
+  let state = useSelector(state => ({ ...state.dialogsPage, isAuth: state.authSlice.isAuth }))
   let navigate = useNavigate()
 
-  useEffect(() => {
-    if (!state.isAuth) {
-      navigate('/login')
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!state.isAuth) {
+  //     navigate('/login')
+  //   }
+  // }, [])
 
   let dialogsComponents = state.dialogs.map((d) => (<DialogItem userName={d.userName} id={d.id} />))
   let messagesComponents = state.messages.map(m => (<Message message={m.message} avatar={m.avatar} />))
-
-
-  let onNewMessageChange = (e) => {
-    dispatch(updateNewMessageText(e.target.value))
-  }
-
-  let onSendMessageClick = () => {
-    dispatch(sendMessage())
-  }
 
   return (
     <div className={s.dialogs}>
@@ -39,33 +30,39 @@ const Dialogs = (props) => {
 
       <div className={s.message_list}>
         {messagesComponents}
-        <div>
-          <textarea
-            // ref={newMessage}
-            placeholder='Enter your message' 
-            value={state.newMessageText}
-            onChange={onNewMessageChange} 
-          />
-          <button onClick={onSendMessageClick}>Send message</button>
-        </div>
+        <AddMessageForm />
       </div>
     </div>
   )
 }
 
-// const addMessageForm = (props) => {
-//   const sendMessage = () => {
-//     dispatch(sendMessage())
-//   }
-//   return(<form onSubmit={sendMessage}>
-//     <textarea
-//       // ref={newMessage}
-//       placeholder='Enter your message' 
-//       // value={state.newMessageText}
-//       // onChange={onNewMessageChange} 
-//     />
-//     <button>Send message</button>
-//   </form>)
-// }
+const AddMessageForm = (props) => {
+
+  const dispatch = useDispatch()
+
+  const onSendMessageClick = (values, { setSubmitting }) => {
+    dispatch(sendMessage(values.messageText))
+    setSubmitting(false)
+    // setFieldValue('messageText', '')
+    values.messageText = ''
+  }
+
+
+  return (
+    <Formik
+      initialValues={{
+        messageText: '',
+      }}
+      onSubmit={onSendMessageClick}
+    >
+      {({ isSubmitting }) => (
+        <Form>
+          <Field as="textarea" placeholder="Enter your message" name="messageText"/>
+          <button type="submit" disabled={isSubmitting} >Send message</button>
+        </Form>
+      )}
+    </Formik>
+  )
+}
 
 export default Dialogs;

@@ -12,22 +12,17 @@ const Profile = (props) => {
 
   let state = useSelector(state => ({...state.profilePage, isAuth: state.authSlice.isAuth}))
   let dispatch = useDispatch()
-  let userId = useParams().userId 
+  let userId = useParams().userId
   let navigate = useNavigate()
 
   useEffect(() => {
-    // if (!state.isAuth) {
+    // if(!state.isAuth) {
     //   navigate('/login')
     //   return
     // }
+
     dispatch(getStatus(userId))
     dispatch(getProfile(userId))
-      // .finally(() => {
-      //   if (!state.isAuth) {
-      //     navigate('/login')
-      //     return
-      //   }
-      // })
   }, [userId])
 
 

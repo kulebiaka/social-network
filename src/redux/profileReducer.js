@@ -9,7 +9,6 @@ let initialState = {
     { id: 3, message: 'b', likesCount: 23 },
     { id: 4, message: 'c', likesCount: 23 },
   ],
-  newPostText: '',
   isFetching: false,
   status: '',
 }
@@ -18,17 +17,13 @@ const profileSlice = createSlice({
   name: 'profilePage',
   initialState,
   reducers: {
-    addPost(state) {
+    addPost(state, action) {
       let newPost = {
         id: (state.posts.length + 1),
-        message: state.newPostText,
+        message: action.payload,
         likesCount: 0
       }
-      state.newPostText = ''
       state.posts.push(newPost)
-    },
-    updateNewPostText(state, action) {
-      state.newPostText = action.payload
     },
     setUserProfile(state, action) {
       state.user = { ...action.payload }
@@ -68,6 +63,6 @@ export const setNewStatus = (status) => (dispatch) => {
 }
 
 
-export const { addPost, updateNewPostText, setUserProfile, setIsFetching, setStatus } = profileSlice.actions
+export const { addPost, setUserProfile, setIsFetching, setStatus } = profileSlice.actions
 
 export default profileSlice.reducer;
