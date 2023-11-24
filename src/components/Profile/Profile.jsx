@@ -10,9 +10,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 const Profile = (props) => {
 
-  let state = useSelector(state => ({...state.profilePage, isAuth: state.authSlice.isAuth}))
+  let state = useSelector(state => ({...state.profilePage, ...state.authSlice}))
   let dispatch = useDispatch()
-  let userId = useParams().userId
+  let userId = useParams().userId || state.id
+  console.log(userId)
   let navigate = useNavigate()
 
   useEffect(() => {
