@@ -4,6 +4,7 @@ import dialogsReducer from "./dialogsReducer"
 import sidebarReducer from "./sidebarReducer"
 import usersReducer from "./usersReducer"
 import authReducer from "./authReducer"
+import appReducer from "./appReducer"
 
 // let reducers = combineReducers({
 //   profilePage: profileReducer,
@@ -15,6 +16,7 @@ import authReducer from "./authReducer"
 
 let store = configureStore({
   reducer:{
+    appSlice: appReducer,
     authSlice: authReducer,
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,

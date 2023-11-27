@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
@@ -9,13 +9,24 @@ import Users from './components/Users/Users';
 import News from './components/News/News'
 import Music from './components/Music/Music'
 import Settings from './components/Settings/Settings'
-import { BrowserRouter as Router, Routes, Route,  useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Preloader from './components/common/Preloader';
 import Error from './components/common/Error';
 import Login from './components/Login/Login';
+// import { initializeApp } from './redux/appReducer';
 // import ProfileWithRouter from './components/Profile/ProfileWithRouter';
 
 const App = (props: any) => {
+
+  // let state = useSelector((state: any) => state.appSlice)
+  // let dispatch = useDispatch()
+
+  // useEffect(() => {
+  //   dispatch(initializeApp())
+  // }, [])
+
+  // if(!state.initialized) return <Preloader />
+
   return (
     <Router>
       <div className='app-wrapper'>

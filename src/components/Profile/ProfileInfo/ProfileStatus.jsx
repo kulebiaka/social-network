@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { setNewStatus } from "../../../redux/profileReducer";
 import { useDispatch } from "react-redux";
+import { useParams } from "react-router";
 
 const ProfileStatus = (props) => {
   

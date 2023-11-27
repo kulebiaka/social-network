@@ -6,6 +6,8 @@
   width: 350px;
 }
 .fieldContainer{
+  display: flex;
+  align-items: center;
   margin: 10px 0px;
 }
 .error{
@@ -13,5 +15,5 @@
   color: red
 }
 .submit{
-  text-align: right;
+  display: block;
 }

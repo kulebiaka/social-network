@@ -26,6 +26,7 @@ const Profile = (props) => {
 
     dispatch(getStatus(userId))
     dispatch(getProfile(userId))
+
   }, [userId])
 
   if(!state){

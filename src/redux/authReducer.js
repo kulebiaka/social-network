@@ -27,8 +27,8 @@ const authSlice = createSlice({
   }
 })
 
-export const setUserIfLoggedIn = () => (dispatch) => {
-  authAPI.isUserLoggedIn()
+export const setUserIfLoggedIn = () => async (dispatch) => {
+  return authAPI.isUserLoggedIn()
     .then(response => {
       if (response.resultCode === 0) {
         dispatch(setAuthUserData(response))
@@ -36,18 +36,19 @@ export const setUserIfLoggedIn = () => (dispatch) => {
     })
 }
 
-export const logIn = (values) => (dispatch) => {
-  authAPI.login(values)
+export const logIn = (values) => async (dispatch) => {
+  return authAPI.login(values)
     .then(response => {
-      if (response.resultCode === 0) {
-        dispatch(setUserIfLoggedIn())
-      }
-      return response
+      debugger
+      // if (response.resultCode === 0) {
+      //   dispatch(setUserIfLoggedIn())
+      // }
+      return Promise.resolve(response)
     })
 }
 
-export const logOut = () => (dispatch) => {
-  authAPI.logOut()
+export const logOut = () => async (dispatch) => {
+  return authAPI.logOut()
     .then(response => {
       console.log(response)
       dispatch(resetUser())

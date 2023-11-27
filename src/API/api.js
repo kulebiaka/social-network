@@ -46,9 +46,9 @@ export const authAPI = {
     return server.get('auth/me').then(response => response.data)
   },
   async login(form){
-    return server.post('auth/login', form).then(response => {
+    return server.post('auth/login', form).then((response) => {
       console.log(response)
-      return response.data
+      return Promise.resolve(response.data)
     })
   },
   async logOut(){

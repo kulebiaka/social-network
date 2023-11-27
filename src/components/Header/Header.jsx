@@ -14,7 +14,8 @@ const Header = () => {
 
   const onLogOutClick = () => {
     dispatch(logOut())
-    navigate('/login')
+      .then(() => {navigate('/login')})
+  
   }
 
   useEffect(() => {

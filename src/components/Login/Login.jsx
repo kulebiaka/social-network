@@ -41,19 +41,27 @@ const LoginForm = () => {
     return errors;
   }
 
-  const onLoginFormSubmit = (values, { setSubmitting }) => {
-    // authAPI.login(values)
-    //   .then(response => {
-    //     if (response.resultCode === 0){
-    //       dispatch(setUserIfLoggedIn())
-    //     }
-    //   })
+  const onLoginFormSubmit = (values, formik) => {
+
     dispatch(logIn(values))
       .then(response => {
-        setSubmitting(false);
+        debugger
+        console.log(response)
         if (response.resultCode === 0) {
+          dispatch(setUserIfLoggedIn())
+          formik.resetForm()
           navigate('/profile')
+        }else{
+          formik.setFieldValue('password', '')
+            .then(() => {formik.setFieldError('common', response.messages[0])
+        })
         }
+        // else if(response.resultCode === 1){
+        //   formik.setFieldError('common', response.messages[0])
+        //   formik.setFieldValue('password', '')
+        // }
+        
+        formik.setSubmitting(false);
       })
   }
 
@@ -64,11 +72,12 @@ const LoginForm = () => {
         email: '',
         password: '',
         rememberMe: false,
+        // captcha: ''
       }}
       validate={loginFormValidation}
       onSubmit={onLoginFormSubmit}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, errors }) => (
         <Form>
           <div className={s.fieldContainer}>
             <Field type="email" name="email" placeholder='Enter your email' className={s.field} />
@@ -82,6 +91,9 @@ const LoginForm = () => {
             <label htmlFor="rememberMe">Remember me</label>
             <Field type="checkbox" name="rememberMe" className={s.field} />
           </div>
+          {/* <ErrorMessage name='common' component="div" className={s.error} /> */}
+          {/* {errors.password && <div className={s.error}>{errors.password}</div>} */}
+          {errors.common && <div className={s.error}>{errors.common}</div>}
           <button type="submit" disabled={isSubmitting} className={s.submit}>
             Submit
           </button>
