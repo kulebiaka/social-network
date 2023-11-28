@@ -6,6 +6,7 @@ import { sendMessage } from '../../redux/dialogsReducer';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Form, Formik, Field } from 'formik';
+import Preloader from '../common/Preloader';
 
 const Dialogs = (props) => {
 

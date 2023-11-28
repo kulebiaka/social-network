@@ -8,6 +8,7 @@ const ProfileInfo = (props) => {
   let state = useSelector(state => state.profilePage.user)
 
   if (!state) return <Preloader />
+  console.log('render')
 
   return (
     <div className={s.back}>

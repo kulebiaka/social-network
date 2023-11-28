@@ -17,10 +17,10 @@ const Profile = (props) => {
   let navigate = useNavigate()
 
   useEffect(() => {
-    // if(!state.isAuth) {
-    //   navigate('/login')
-    //   return
-    // }
+    if(!state.isAuth) {
+      navigate('/login')
+      return
+    }
 
     if(userId === null) return
 
@@ -28,10 +28,6 @@ const Profile = (props) => {
     dispatch(getProfile(userId))
 
   }, [userId])
-
-  if(!state){
-    return <Preloader />
-  }
 
 
   return (

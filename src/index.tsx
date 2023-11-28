@@ -7,23 +7,23 @@ import store from './redux/store'
 import { Provider } from 'react-redux';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-export let rerenderEntireTree = () => {
-  // debugger;
-  root.render(
-      // <React.StrictMode>
-        <Provider store={store}> 
-          <App store={store}/>
-        </Provider> 
-      // </React.StrictMode>
-  );
-}
+// export let rerenderEntireTree = () => {
+// debugger;
+root.render(
+  // <React.StrictMode>
+  <Provider store={store}>
+    <App />
+  </Provider>
+  // </React.StrictMode>
+);
+// }
 
 
-rerenderEntireTree();
+// rerenderEntireTree();
 
-export let callSubscriber = store.subscribe(() => {
-  rerenderEntireTree()
-})
+// export let callSubscriber = store.subscribe(() => {
+//   rerenderEntireTree()
+// })
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
