@@ -49,11 +49,11 @@ export const logIn = (values) => async (dispatch) => {
 }
 
 export const logOut = () => async (dispatch) => {
-  return authAPI.logOut()
-    .then(response => {
-      console.log(response)
-      dispatch(resetUser())
-    })
+  let response = await authAPI.logOut()
+  // .then(response => {
+  console.log(response)
+  dispatch(resetUser())
+  // })
 }
 
 export const { setAuthUserData, resetUser } = authSlice.actions

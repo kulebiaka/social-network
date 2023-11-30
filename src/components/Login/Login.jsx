@@ -9,12 +9,12 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
-  const state = useSelector(state => state.authSlice)
+  const state = useSelector(state => ({isAuth: state.authSlice.isAuth}))
   const navigate = useNavigate()
 
   useEffect(() => {
-    if(state.isAuth) navigate(`/profile/${state.id}`)
-  },)
+    if(state.isAuth) navigate(`/profile`)
+  })
 
   return (<div className={s.container}>
     <LoginForm />
@@ -45,7 +45,6 @@ const LoginForm = () => {
 
     dispatch(logIn(values))
       .then(response => {
-        debugger
         console.log(response)
         if (response.resultCode === 0) {
           dispatch(setUserIfLoggedIn())

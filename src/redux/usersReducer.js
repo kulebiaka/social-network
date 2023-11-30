@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { usersAPI } from "../API/api"
 import axios from "axios"
+import { updateObjectInArrayById } from "../utls/objectHelper"
 
 let initialState = {
   users: [
@@ -21,34 +22,36 @@ let usersSlice = createSlice({
   initialState,
   reducers: {
     followSuccess(state, action) {
-      state.users = state.users.map((user) => {
-        if (action.payload === user.id) {
-          return { ...user, followed: true }
-        }
-        return user
-      })
+      state.users = updateObjectInArrayById(state.users, action.payload, 'id', { followed: true })
+      // state.users = state.users.map((user) => {
+      //   if (action.payload === user.id) {
+      //     return { ...user, followed: true }
+      //   }
+      //   return user
+      // })
     },
     unfollowSuccess(state, action) {
-      state.users = state.users.map((user) => {
-        if (action.payload === user.id) {
-          return { ...user, followed: false }
-        }
-        return user
-      })
+      state.users = updateObjectInArrayById(state.users, action.payload, 'id', { followed: false })
+      // state.users = state.users.map((user) => {
+      //   if (action.payload === user.id) {
+      //     return { ...user, followed: false }
+      //   }
+      //   return user
+      // })
     },
     toggleInFollowingProgress(state, action) {
-      if (action.payload.isFetching) {
+      if (action.payload.isFetching === true) {
         state.inFollowingProgress.push(action.payload.id)
       } else {
         state.inFollowingProgress = state.inFollowingProgress.filter(value => value != action.payload.id)
       }
     },
     setUsers(state, action) {
-      if (state.users.length === 0) {
-        state.users = action.payload
-      } else {
-        state.users = [...state.users, ...action.payload]
-      }
+      // if (state.users.length === 0) {
+      //   state.users = action.payload
+      // } else {
+      state.users = [...state.users, ...action.payload]
+      // }
     },
     setCurrentPage(state, action) {
       state.currentPage = action.payload
@@ -65,40 +68,37 @@ let usersSlice = createSlice({
   }
 })
 
-export const getUsers = (currentPage, pageSize) => (dispatch) => {
+export const getUsers = (currentPage, pageSize) => async (dispatch) => {
   dispatch(setIsFetching(true))
-  usersAPI.getUsers(currentPage, pageSize)
-    .then(users => {
-      dispatch(setIsFetching(false))
-      dispatch(setUsers(users))
-    })
+  let users = await usersAPI.getUsers(currentPage, pageSize)
+  dispatch(setUsers(users))
+  dispatch(setIsFetching(false))
 }
 
-export const getAllUsersCount = () => (dispatch) => {
-  usersAPI.getUsersCount()
-    .then(count => {
-      dispatch(setAllUsersCount(count))
-    })
+export const getAllUsersCount = () => async (dispatch) => {
+  let count = await usersAPI.getUsersCount()
+  dispatch(setAllUsersCount(count))
+}
+
+const followUnfollowTemplate = async (dispatch, apiMethod, id, actionCreator) => {
+  dispatch(toggleInFollowingProgress({ isFetching: true, id }))
+  let response = await usersAPI[apiMethod](id)
+
+  if (response.data.resultCode === 0) {
+    console.log(response.data)
+    dispatch(actionCreator(id))
+  }
+
+  dispatch(toggleInFollowingProgress({ isFetching: false, id }))
+
 }
 
 export const follow = (id) => (dispatch) => {
-  dispatch(toggleInFollowingProgress({isFetching: true, id}))
-    usersAPI.follow(id)
-      .then((response) => {
-        console.log(response.data)
-        dispatch(followSuccess(id))
-        dispatch(toggleInFollowingProgress({isFetching: false, id}))
-      })
+  followUnfollowTemplate(dispatch, 'follow', id, followSuccess)
 }
 
 export const unfollow = (id) => (dispatch) => {
-  dispatch(toggleInFollowingProgress({isFetching: true, id}))
-    usersAPI.unfollow(id)
-      .then((response) => {
-        console.log(response.data)
-        dispatch(unfollowSuccess(id))
-        dispatch(toggleInFollowingProgress({isFetching: false, id}))
-      })
+  followUnfollowTemplate(dispatch, 'unfollow', id, unfollowSuccess)
 }
 
 export const { followSuccess, unfollowSuccess, toggleInFollowingProgress, setUsers, setCurrentPage, setAllUsersCount, setIsFetching, clearToInitialState } = usersSlice.actions

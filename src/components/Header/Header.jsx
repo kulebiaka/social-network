@@ -9,7 +9,7 @@ import { authAPI } from '../../API/api';
 const Header = () => {
 
   const dispatch = useDispatch()
-  const state = useSelector(state => state.authSlice)
+  const state = useSelector(state => ({ isAuth: state.authSlice.isAuth, login: state.authSlice.login }))
   const navigate = useNavigate()
 
   const onLogOutClick = () => {

@@ -44,7 +44,6 @@ export const getProfile = (id) => async (dispatch) => {
   dispatch(setIsFetching(true))
   let data = await profileAPI.getProfile(id)
   // .then(data => {
-  console.log(data)
   dispatch(setUserProfile(data))
   dispatch(setIsFetching(false))
   // })
@@ -53,7 +52,6 @@ export const getProfile = (id) => async (dispatch) => {
 export const getStatus = (id) => async (dispatch) => {
   let response = await profileAPI.getStatus(id)
   // .then(response => {
-  console.log(response)
   dispatch(setStatus(response.data))
   // })
 }
@@ -61,8 +59,9 @@ export const getStatus = (id) => async (dispatch) => {
 export const setNewStatus = (status) => async (dispatch) => {
   let response = await profileAPI.putNewStatus(status)
   // .then(response => {
-  console.log(response.data)
+  // console.log(response.data)
   // })
+  return response
 }
 
 
