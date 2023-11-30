@@ -5,15 +5,14 @@ import App from './App.jsx';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store'
 import { Provider } from 'react-redux';
+import AppContainer from './App.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 // export let rerenderEntireTree = () => {
 // debugger;
 root.render(
   // <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <AppContainer />
   // </React.StrictMode>
 );
 // }

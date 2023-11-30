@@ -5,31 +5,31 @@ import { useParams } from "react-router";
 
 const ProfileStatus = (props) => {
   
-  let [state, setState] = useState({tittle: props.status, editMode:false})
+  let [status, setStatus] = useState(props.status)
+  let [editMode, setEditMode] = useState(false)
   let dispatch = useDispatch()
 
   const activateEditMode = () => {
-    setState({...state, editMode: true})
+    setEditMode(true)
   }
   const deactivateEditMode = () => {
-    setState({...state, editMode: false})
-    if(state.tittle !== props.status){
-
-      dispatch(setNewStatus(state.tittle))
+    setEditMode(false)
+    if(status !== props.status){
+      dispatch(setNewStatus(status))
     }
   }
-  const onInputStatusChange =(e) => {
-    setState({...state, tittle: e.target.value})
+  const onInputStatusChange = (e) => {
+    setStatus( e.target.value)
   }
 
   return (<>
-    { state.editMode ?
+    { editMode ?
     (<div>
-      <input type="text" autoFocus={true} onChange={onInputStatusChange} onBlur={deactivateEditMode} value={state.tittle}/>
+      <input type="text" autoFocus={true} onChange={onInputStatusChange} onBlur={deactivateEditMode} value={status}/>
     </div>)
      :
     (<div >
-    <span onDoubleClick={activateEditMode}>{state.tittle || '---'}</span>
+    <span onDoubleClick={activateEditMode}>{status || '---'}</span>
   </div>)
     }
   </>)

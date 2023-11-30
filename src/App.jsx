@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 import Header from './components/Header/Header';
@@ -14,6 +14,8 @@ import Preloader from './components/common/Preloader';
 import Error from './components/common/Error';
 import Login from './components/Login/Login';
 import { initializeApp } from './redux/appReducer';
+import store from './redux/store'
+import { Provider } from 'react-redux';
 // import ProfileWithRouter from './components/Profile/ProfileWithRouter';
 
 let App = () => {
@@ -48,6 +50,13 @@ let App = () => {
     </Router>
   );
 }
-// App = memo(App)
 
-export default App;
+const AppContainer = () => {
+  return(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
+}
+
+export default AppContainer;
