@@ -14,13 +14,12 @@ const Header = () => {
 
   const onLogOutClick = () => {
     dispatch(logOut())
-      .then(() => {navigate('/login')})
-  
+      .then(() => {navigate('/login')})  
   }
 
-  useEffect(() => {
-    dispatch(setUserIfLoggedIn())
-  }, []) 
+  // useEffect(() => {
+  //   dispatch(setUserIfLoggedIn())
+  // }, []) 
 
   return <header className={s.header}>
     <img src='https://www.freelogodesign.org/Content/img/logo-ex-7.png' />

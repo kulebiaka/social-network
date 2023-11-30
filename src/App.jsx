@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 import Header from './components/Header/Header';
@@ -16,29 +16,25 @@ import Login from './components/Login/Login';
 import { initializeApp } from './redux/appReducer';
 // import ProfileWithRouter from './components/Profile/ProfileWithRouter';
 
-const App = () => {
-  
-  debugger
+let App = () => {
 
-  // let state = useSelector(state => state.appSlice)
-  // let dispatch = useDispatch()
+  let state = useSelector(state => state.appSlice)
+  let dispatch = useDispatch()
 
-  debugger
+  useEffect(() => {
+    dispatch(initializeApp())
+  }, [])
 
-  // useEffect(() => {
-  //   dispatch(initializeApp())
-  // }, [])
-
-  // if(!state.initialized) return <Preloader />
+  if(!state.initialized) return <Preloader />
 
   return (
     <Router>
       <div className='app-wrapper'>
         <Header />
         <Navbar />
-        <div  className='app-wrapper-content'>
+        <div className='app-wrapper-content'>
           <Routes>
-            <Route path='/login' element={<Login />}/>
+            <Route path='/login' element={<Login />} />
             <Route path='/profile/:userId?' element={<Profile />} />
             <Route path='/dialogs/*' element={<Dialogs />} />
             <Route path='/users' element={<Users />} />
@@ -52,5 +48,6 @@ const App = () => {
     </Router>
   );
 }
+// App = memo(App)
 
 export default App;

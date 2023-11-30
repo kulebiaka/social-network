@@ -25,6 +25,9 @@ const profileSlice = createSlice({
       }
       state.posts.push(newPost)
     },
+    deletePost(state, action) {
+      return { ...state, posts: state.posts.filter((p) => p.id !== action.payload) }
+    },
     setUserProfile(state, action) {
       state.user = { ...action.payload }
     },
@@ -37,32 +40,32 @@ const profileSlice = createSlice({
   }
 })
 
-export const getProfile = (id) => (dispatch) => {
+export const getProfile = (id) => async (dispatch) => {
   dispatch(setIsFetching(true))
-  profileAPI.getProfile(id)
-    .then(data => {
-      console.log(data)
-      dispatch(setUserProfile(data))
-      dispatch(setIsFetching(false))
-    })
+  let data = await profileAPI.getProfile(id)
+  // .then(data => {
+  console.log(data)
+  dispatch(setUserProfile(data))
+  dispatch(setIsFetching(false))
+  // })
 }
 
-export const getStatus = (id) => (dispatch) => {
-  profileAPI.getStatus(id)
-    .then(response => {
-      console.log(response)
-      dispatch(setStatus(response.data))
-    })
+export const getStatus = (id) => async (dispatch) => {
+  let response = await profileAPI.getStatus(id)
+  // .then(response => {
+  console.log(response)
+  dispatch(setStatus(response.data))
+  // })
 }
 
-export const setNewStatus = (status) => (dispatch) => {
-  profileAPI.putNewStatus(status)
-    .then(response => {
-      console.log(response.data)
-    })
+export const setNewStatus = (status) => async (dispatch) => {
+  let response = await profileAPI.putNewStatus(status)
+  // .then(response => {
+  console.log(response.data)
+  // })
 }
 
 
-export const { addPost, setUserProfile, setIsFetching, setStatus } = profileSlice.actions
+export const { addPost, deletePost, setUserProfile, setIsFetching, setStatus } = profileSlice.actions
 
 export default profileSlice.reducer;
