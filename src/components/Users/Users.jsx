@@ -6,6 +6,7 @@ import { setCurrentPage, setAllUsersCount, clearToInitialState, getUsers, getAll
 import axios from "axios";
 import Preloader from "../common/Preloader";
 import { usersAPI } from "../../API/api";
+import Paginator from "../common/Paginator";
 
 const Users = (props) => {
 
@@ -26,11 +27,14 @@ const Users = (props) => {
   return (
     <div className={s.container}>
       <h4>Users</h4>
-      <div className={s.users}>{usersComponents}</div>
-      {state.isFetching ?
+      <Paginator elementsCount={state.allUsersCount} pageSize={state.pageSize}
+      currentPage={state.currentPage} setCurrentPage={setCurrentPage} 
+      portionSize={10} />
+      {state.isFetching ? <Preloader/> : <div className={s.users}>{usersComponents}</div>}
+      {/* {state.isFetching ?
         <Preloader />
         : <button className={s.showMore_btn} onClick={() => { dispatch(setCurrentPage(state.currentPage + 1)) }}>Show More</button>
-      }
+      } */}
 
     </div>
   )

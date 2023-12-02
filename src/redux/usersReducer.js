@@ -50,7 +50,7 @@ let usersSlice = createSlice({
       // if (state.users.length === 0) {
       //   state.users = action.payload
       // } else {
-      state.users = [...state.users, ...action.payload]
+      state.users = action.payload
       // }
     },
     setCurrentPage(state, action) {
