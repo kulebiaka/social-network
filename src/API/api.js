@@ -37,6 +37,16 @@ export const profileAPI = {
   },
   async putNewStatus(status){
     return server.put(`profile/status`, {status})
+  },
+  async putNewPhoto(file){
+    const formData = new FormData()
+    formData.append('image', file)
+
+    return server.put(`profile/photo`, formData, {
+      headers:{
+        'Content-Type': 'multipart/form-data'
+      }
+    })
   }
 
 }

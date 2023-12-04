@@ -36,6 +36,9 @@ const profileSlice = createSlice({
     },
     setStatus(state, action) {
       state.status = action.payload
+    },
+    uploadPhotoSuccess(state, action){
+      state.user.photos = action.payload
     }
   }
 })
@@ -64,7 +67,17 @@ export const setNewStatus = (status) => async (dispatch) => {
   return response
 }
 
+export const uploadNewPhoto = (file) => async (dispatch) => {
+  console.log(file)
+  let response = await profileAPI.putNewPhoto(file)
+  console.log(response)
+  if(response.data.resultCode === 0) {
+    dispatch(uploadPhotoSuccess(response.data.data.photos))
+  }
+  return response
+}
 
-export const { addPost, deletePost, setUserProfile, setIsFetching, setStatus } = profileSlice.actions
+
+export const { addPost, deletePost, setUserProfile, setIsFetching, setStatus, uploadPhotoSuccess } = profileSlice.actions
 
 export default profileSlice.reducer;

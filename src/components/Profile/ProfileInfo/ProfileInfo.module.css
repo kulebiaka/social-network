@@ -1,9 +1,10 @@
-.back{
+.container{
   background-image: url('https://tinypng.com/images/social/website.jpg');
   display: grid;
   align-items: end;
 
   height: 400px;
+  margin: 0px 0px 50px;
 }
 
 .head{
@@ -31,3 +32,4 @@
   padding: 10px;
   width: 100%;
 }
+
