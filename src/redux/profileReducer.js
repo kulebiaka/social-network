@@ -29,7 +29,7 @@ const profileSlice = createSlice({
       return { ...state, posts: state.posts.filter((p) => p.id !== action.payload) }
     },
     setUserProfile(state, action) {
-      state.user = { ...action.payload }
+      state.user = { ...action.payload, photos: action.payload.photos ?? state.user.photos, userId: action.payload.userId ?? state.user.userId }
     },
     setIsFetching(state, action) {
       state.isFetching = action.payload
@@ -68,15 +68,20 @@ export const setNewStatus = (status) => async (dispatch) => {
 }
 
 export const uploadNewPhoto = (file) => async (dispatch) => {
-  console.log(file)
   let response = await profileAPI.putNewPhoto(file)
-  console.log(response)
   if(response.data.resultCode === 0) {
     dispatch(uploadPhotoSuccess(response.data.data.photos))
   }
   return response
 }
 
+export const setNewDataProfile = (data) => async (dispatch) => {
+  let response = await profileAPI.putNewDataProfile(data)
+  if(response.resultCode === 0){
+    dispatch(setUserProfile(data))
+  }
+  return response
+}
 
 export const { addPost, deletePost, setUserProfile, setIsFetching, setStatus, uploadPhotoSuccess } = profileSlice.actions
 

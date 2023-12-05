@@ -47,6 +47,9 @@ export const profileAPI = {
         'Content-Type': 'multipart/form-data'
       }
     })
+  },
+  async putNewDataProfile(data){
+    return server.put(`profile`, data).then(res => res.data)
   }
 
 }
@@ -63,6 +66,6 @@ export const authAPI = {
   },
   async logOut(){
     return server.delete('auth/login')
-  }
+  },
 }
 

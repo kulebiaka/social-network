@@ -11,9 +11,9 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 // export let rerenderEntireTree = () => {
 // debugger;
 root.render(
-  // <React.StrictMode>
+  <React.StrictMode>
     <AppContainer />
-  // </React.StrictMode>
+  </React.StrictMode>
 );
 // }
 

@@ -84,13 +84,12 @@ const followUnfollowTemplate = async (dispatch, apiMethod, id, actionCreator) =>
   dispatch(toggleInFollowingProgress({ isFetching: true, id }))
   let response = await usersAPI[apiMethod](id)
 
-  if (response.data.resultCode === 0) {
+  if (response.data.resultCode === 0) { 
     console.log(response.data)
     dispatch(actionCreator(id))
   }
 
   dispatch(toggleInFollowingProgress({ isFetching: false, id }))
-
 }
 
 export const follow = (id) => (dispatch) => {
