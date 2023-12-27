@@ -5,7 +5,7 @@ let initialState = {
   id: null,
   email: null,
   login: null,
-  isAuth: undefined
+  isAuth: undefined,
 }
 
 const authSlice = createSlice({
@@ -22,6 +22,12 @@ const authSlice = createSlice({
       return {
         ...initialState,
         isAuth: false
+      }
+    },
+    getCaptchaUrlSuccess(state, action) {
+      return{
+        ...state,
+        captchaUrl: action.payload
       }
     }
   }
@@ -48,6 +54,11 @@ export const logIn = (values) => async (dispatch) => {
   // })
 }
 
+export const getCaptcha = () => async (dispatch) => {
+  let response = await authAPI.getCaptchaUrl()
+  dispatch(getCaptchaUrlSuccess(response.url))
+} 
+
 export const logOut = () => async (dispatch) => {
   let response = await authAPI.logOut()
   // .then(response => {
@@ -56,6 +67,6 @@ export const logOut = () => async (dispatch) => {
   // })
 }
 
-export const { setAuthUserData, resetUser } = authSlice.actions
+export const { setAuthUserData, resetUser, getCaptchaUrlSuccess } = authSlice.actions
 
 export default authSlice.reducer

@@ -67,5 +67,8 @@ export const authAPI = {
   async logOut(){
     return server.delete('auth/login')
   },
+  async getCaptchaUrl(){
+    return server.get('security/get-captcha-url').then(res => res.data)
+  }
 }
 

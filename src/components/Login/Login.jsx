@@ -3,17 +3,17 @@ import s from './Login.module.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { authAPI } from '../../API/api';
-import { logIn, setUserIfLoggedIn } from '../../redux/authReducer';
+import { getCaptcha, logIn, setUserIfLoggedIn } from '../../redux/authReducer';
 import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
 
-  const state = useSelector(state => ({isAuth: state.authSlice.isAuth}))
+  const state = useSelector(state => ({ isAuth: state.authSlice.isAuth }))
   const navigate = useNavigate()
 
   useEffect(() => {
-    if(state.isAuth) navigate(`/profile`)
+    if (state.isAuth) navigate(`/profile`)
   })
 
   return (<div className={s.container}>
@@ -24,6 +24,7 @@ const Login = () => {
 const LoginForm = () => {
 
   const dispatch = useDispatch();
+  const captchaUrl = useSelector(state => state.authSlice.captchaUrl)
   const navigate = useNavigate()
 
   const loginFormValidation = values => {
@@ -42,6 +43,7 @@ const LoginForm = () => {
   }
 
   const onLoginFormSubmit = (values, formik) => {
+    formik.setSubmitting(true)
 
     dispatch(logIn(values))
       .then(response => {
@@ -50,16 +52,14 @@ const LoginForm = () => {
           dispatch(setUserIfLoggedIn())
           formik.resetForm()
           navigate('/profile')
-        }else{
+        } else if (response.resultCode === 1) {
           formik.setFieldValue('password', '')
-            .then(() => {formik.setFieldError('common', response.messages[0])
-        })
+            .then(() => {
+              formik.setFieldError('common', response.messages[0])
+            })
+        } else {
+          dispatch(getCaptcha())
         }
-        // else if(response.resultCode === 1){
-        //   formik.setFieldError('common', response.messages[0])
-        //   formik.setFieldValue('password', '')
-        // }
-        
         formik.setSubmitting(false);
       })
   }
@@ -71,12 +71,12 @@ const LoginForm = () => {
         email: '',
         password: '',
         rememberMe: false,
-        // captcha: ''
+        captcha: ''
       }}
       validate={loginFormValidation}
       onSubmit={onLoginFormSubmit}
     >
-      {({ isSubmitting, errors }) => (
+      {({ isSubmitting, errors, values }) => (
         <Form>
           <div className={s.fieldContainer}>
             <Field type="email" name="email" placeholder='Enter your email' className={s.field} />
@@ -90,9 +90,11 @@ const LoginForm = () => {
             <label htmlFor="rememberMe">Remember me</label>
             <Field type="checkbox" name="rememberMe" className={s.field} />
           </div>
-          {/* <ErrorMessage name='common' component="div" className={s.error} /> */}
-          {/* {errors.password && <div className={s.error}>{errors.password}</div>} */}
           {errors.common && <div className={s.error}>{errors.common}</div>}
+          {captchaUrl && <div>
+            <img src={captchaUrl} alt="" />
+            <Field type="text" name="captcha"></Field>
+          </div>}
           <button type="submit" disabled={isSubmitting} className={s.submit}>
             Submit
           </button>
@@ -102,4 +104,5 @@ const LoginForm = () => {
   </div>)
 }
 
-export default Login
+
+export default Login;
