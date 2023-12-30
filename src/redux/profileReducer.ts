@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { profileAPI } from "../API/api"
-
+import { AppThunk, ProfileUserType, PostType } from "../types/types"
 
 let initialState = {
   posts: [
@@ -8,9 +8,10 @@ let initialState = {
     { id: 2, message: 'a', likesCount: 23 },
     { id: 3, message: 'b', likesCount: 23 },
     { id: 4, message: 'c', likesCount: 23 },
-  ],
+  ] as Array<PostType>,
   isFetching: false,
   status: '',
+  user: null as ProfileUserType | null
 }
 
 const profileSlice = createSlice({
@@ -28,8 +29,8 @@ const profileSlice = createSlice({
     deletePost(state, action) {
       return { ...state, posts: state.posts.filter((p) => p.id !== action.payload) }
     },
-    setUserProfile(state, action) {
-      state.user = { ...action.payload, photos: action.payload.photos ?? state.user.photos, userId: action.payload.userId ?? state.user.userId }
+    setUserProfile(state, action : PayloadAction<ProfileUserType>) {
+      state.user = { ...action.payload, photos: action.payload.photos ?? state.user?.photos, userId: action.payload.userId ?? state.user?.userId }
     },
     setIsFetching(state, action) {
       state.isFetching = action.payload
@@ -38,12 +39,14 @@ const profileSlice = createSlice({
       state.status = action.payload
     },
     uploadPhotoSuccess(state, action){
-      state.user.photos = action.payload
+      if(state.user!== null){
+        state.user.photos = action.payload
+      }
     }
   }
 })
 
-export const getProfile = (id) => async (dispatch) => {
+export const getProfile = (id: number) : AppThunk => async (dispatch) => {
   dispatch(setIsFetching(true))
   let data = await profileAPI.getProfile(id)
   // .then(data => {
@@ -52,14 +55,14 @@ export const getProfile = (id) => async (dispatch) => {
   // })
 }
 
-export const getStatus = (id) => async (dispatch) => {
+export const getStatus = (id: number) : AppThunk => async (dispatch) => {
   let response = await profileAPI.getStatus(id)
   // .then(response => {
   dispatch(setStatus(response.data))
   // })
 }
 
-export const setNewStatus = (status) => async (dispatch) => {
+export const setNewStatus = (status: string) : AppThunk => async (dispatch) => {
   let response = await profileAPI.putNewStatus(status)
   // .then(response => {
   // console.log(response.data)
@@ -67,7 +70,7 @@ export const setNewStatus = (status) => async (dispatch) => {
   return response
 }
 
-export const uploadNewPhoto = (file) => async (dispatch) => {
+export const uploadNewPhoto = (file: File) : AppThunk => async (dispatch) => {
   let response = await profileAPI.putNewPhoto(file)
   if(response.data.resultCode === 0) {
     dispatch(uploadPhotoSuccess(response.data.data.photos))
@@ -75,7 +78,7 @@ export const uploadNewPhoto = (file) => async (dispatch) => {
   return response
 }
 
-export const setNewDataProfile = (data) => async (dispatch) => {
+export const setNewDataProfile = (data: ProfileUserType) : AppThunk => async (dispatch) => {
   let response = await profileAPI.putNewDataProfile(data)
   if(response.resultCode === 0){
     dispatch(setUserProfile(data))

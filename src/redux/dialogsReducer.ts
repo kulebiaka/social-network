@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 
 let initialState = {
@@ -24,7 +24,7 @@ const dialogsSlice = createSlice({
   name: 'dialogsPage',
   initialState,
   reducers: {
-    sendMessage(state, action){
+    sendMessage(state, action: PayloadAction<string>){
       let newMessage = {
         id: (state.messages.length + 1),
         message: action.payload,

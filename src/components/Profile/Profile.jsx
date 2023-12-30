@@ -11,10 +11,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 const Profile = (props) => {
 
   let state = useSelector(state => ({...state.profilePage, ...state.authSlice}))
+  debugger
   let dispatch = useDispatch()
   let userId = useParams().userId ?? state.id
+  let authId = useSelector(state => state.authSlice.id)
+  let isOwner = authId === userId
   let navigate = useNavigate()
-
+  debugger
   useEffect(() => {
     if(state.isAuth === false) {
       navigate('/login')
@@ -31,7 +34,7 @@ const Profile = (props) => {
 
   return (
     <div className={s.content}>
-      {state.isFetching ? <Preloader /> : (<><ProfileInfo status={state.status} />
+      {state.isFetching ? <Preloader /> : (<><ProfileInfo status={state.status} isOwner={isOwner}/>
         <MyPosts
         // store={props.store}
         /></>)}

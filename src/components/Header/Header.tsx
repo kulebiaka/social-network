@@ -4,22 +4,20 @@ import axios from 'axios';
 import { logOut, setAuthUserData, setUserIfLoggedIn } from '../../redux/authReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { authAPI } from '../../API/api';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 
 const Header = () => {
 
-  const dispatch = useDispatch()
-  const state = useSelector(state => ({ isAuth: state.authSlice.isAuth, login: state.authSlice.login }))
+  const dispatch = useAppDispatch()
+  const state = useAppSelector(state => ({ isAuth: state.authSlice.isAuth, login: state.authSlice.login }))
   const navigate = useNavigate()
 
   const onLogOutClick = () => {
     dispatch(logOut())
-      .then(() => {navigate('/login')})  
+      // .then(() => {
+        navigate('/login')
+      // })  
   }
-
-  // useEffect(() => {
-  //   dispatch(setUserIfLoggedIn())
-  // }, []) 
 
   return <header className={s.header}>
     <img src='https://www.freelogodesign.org/Content/img/logo-ex-7.png' />

@@ -5,12 +5,13 @@ import Message from './Message/Message';
 import { sendMessage } from '../../redux/dialogsReducer';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Form, Formik, Field } from 'formik';
+import { Form, Formik, Field, FormikHelpers } from 'formik';
 import Preloader from '../common/Preloader';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 
-const Dialogs = (props) => {
+const Dialogs = () => {
 
-  let state = useSelector(state => ({ ...state.dialogsPage, isAuth: state.authSlice.isAuth }))
+  let state = useAppSelector(state => ({ ...state.dialogsPage, isAuth: state.authSlice.isAuth }))
   let navigate = useNavigate()
 
   useEffect(() => {
@@ -37,11 +38,15 @@ const Dialogs = (props) => {
   )
 }
 
-const AddMessageForm = (props) => {
+type ValuesType = {
+  messageText: string
+}
 
-  const dispatch = useDispatch()
+const AddMessageForm = () => {
 
-  const onSendMessageClick = (values, { setSubmitting }) => {
+  const dispatch = useAppDispatch()
+
+  const onSendMessageClick = (values: ValuesType, { setSubmitting } : FormikHelpers<ValuesType>) => {
     dispatch(sendMessage(values.messageText))
     setSubmitting(false)
     // setFieldValue('messageText', '')

@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App.jsx';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store'
 import { Provider } from 'react-redux';
-import AppContainer from './App.jsx';
+import AppContainer from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 // export let rerenderEntireTree = () => {

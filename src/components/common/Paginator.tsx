@@ -1,7 +1,16 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { AnyAction } from 'redux'
 
-const Paginator = ({elementsCount, pageSize, currentPage, setCurrentPage, portionSize}) => {
+type PropsType = {
+  elementsCount: number,
+  pageSize: number,
+  currentPage: number,
+  portionSize: number,
+  setCurrentPage: (a: number) => AnyAction
+}
+
+const Paginator = ({elementsCount, pageSize, currentPage, setCurrentPage, portionSize} : PropsType) => {
 
   let dispatch = useDispatch()
 

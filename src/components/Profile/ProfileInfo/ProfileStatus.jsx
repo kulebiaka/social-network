@@ -23,7 +23,7 @@ const ProfileStatus = (props) => {
   }
 
   return (<>
-    { editMode ?
+    { editMode && props.isOwner ?
     (<div>
       <input type="text" autoFocus={true} onChange={onInputStatusChange} onBlur={deactivateEditMode} value={status}/>
     </div>)

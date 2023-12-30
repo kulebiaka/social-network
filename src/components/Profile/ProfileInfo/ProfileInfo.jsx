@@ -7,12 +7,10 @@ import ImgWithDefault from '../../common/ImgWithDefault';
 import { setNewDataProfile, uploadNewPhoto } from '../../../redux/profileReducer';
 import { Form, Formik, Field, ErrorMessage } from 'formik';
 
-const ProfileInfo = (props) => {
+const ProfileInfo = ({status, isOwner}) => {
 
   let [editMode, setEditMode] = useState(false)
   let state = useSelector(state => ({ ...state.profilePage.user }))
-  let authId = useSelector(state => state.authSlice.id)
-  let isOwner = authId ===  state.userId
   let dispatch = useDispatch()
 
   if (!state) return <Preloader />
@@ -35,7 +33,7 @@ const ProfileInfo = (props) => {
             {state.fullName}
           </h3>
           <div>
-            <ProfileStatus status={props.status} />
+            <ProfileStatus status={status} isOwner={isOwner}/>
           </div>
         </div>
       </div>
@@ -92,7 +90,7 @@ const ProfileDataForm = ({ aboutMe, contacts, lookingForAJob, lookingForAJobDesc
       initialValues={{ aboutMe, contacts, lookingForAJob, lookingForAJobDescription, fullName }}
       onSubmit={onSaveProfileData}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, handleChange }) => (
         <Form>
           <button type="submit" className={s.editMode} disabled={isSubmitting}>Save</button>
           <div>
@@ -101,7 +99,7 @@ const ProfileDataForm = ({ aboutMe, contacts, lookingForAJob, lookingForAJobDesc
             <div><b>Contacts:</b>
               <div style={{ paddingLeft: '10px' }}>
                 {contacts && Object.keys(contacts).map((key) => (<div>
-                  {key}: <Field key={key} name={"contacts." + key} value={contacts[key]}></Field><ErrorMessage name={"contacts." + key}/>
+                  {key}: <Field key={key} type="text" name={`contacts.${key}`}></Field><ErrorMessage name={"contacts." + key}/>
                 </div>))}
               </div>
             </div>
