@@ -7,6 +7,7 @@ let initialState = {
   email: null as string | null,
   login: null as string | null,
   isAuth: null as boolean | null,
+  captchaUrl: ''
 }
 
 const authSlice = createSlice({

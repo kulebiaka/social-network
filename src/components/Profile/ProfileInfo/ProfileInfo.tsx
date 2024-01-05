@@ -5,17 +5,19 @@ import Preloader from '../../common/Preloader';
 import ProfileStatus from './ProfileStatus';
 import ImgWithDefault from '../../common/ImgWithDefault';
 import { setNewDataProfile, uploadNewPhoto } from '../../../redux/profileReducer';
-import { Form, Formik, Field, ErrorMessage } from 'formik';
+import { Form, Formik, Field, ErrorMessage, FormikHelpers } from 'formik';
+import { useAppDispatch, useAppSelector } from '../../../redux/store';
+import { ContactsType, ProfileUserType } from '../../../types/types';
 
-const ProfileInfo = ({status, isOwner}) => {
+const ProfileInfo = ({status, isOwner}: {status: string, isOwner: boolean}) => {
 
-  let [editMode, setEditMode] = useState(false)
-  let state = useSelector(state => ({ ...state.profilePage.user }))
-  let dispatch = useDispatch()
+  let [editMode, setEditMode] = useState<boolean>(false)
+  let state = useAppSelector(state => ({ ...state.profilePage.user }))
+  let dispatch = useAppDispatch()
 
   if (!state) return <Preloader />
 
-  const onUploadNewPhoto = (e) => {
+  const onUploadNewPhoto = (e: any) => {
     if (e.target.files.length) {
       dispatch(uploadNewPhoto(e.target.files[0]))
     }
@@ -48,7 +50,14 @@ const ProfileInfo = ({status, isOwner}) => {
   )
 }
 
-const ProfileData = ({ aboutMe, contacts, lookingForAJob, lookingForAJobDescription, fullName, setEditMode, isOwner }) => {
+interface ProfileFormProps extends ProfileUserType{
+  setEditMode: (a: boolean) => void, 
+}
+interface ProfileDataProps extends ProfileFormProps{
+  isOwner: boolean
+}
+
+const ProfileData = ({ aboutMe, contacts, lookingForAJob, lookingForAJobDescription, fullName, setEditMode, isOwner }: any) => {
 
   return (<div>
     {isOwner && <button className={s.editMode} onClick={() => { setEditMode(true) }}>Edit</button>}
@@ -64,19 +73,20 @@ const ProfileData = ({ aboutMe, contacts, lookingForAJob, lookingForAJobDescript
 }
 
 
-const ProfileDataForm = ({ aboutMe, contacts, lookingForAJob, lookingForAJobDescription, fullName, setEditMode }) => {
+const ProfileDataForm = ({ aboutMe, contacts, lookingForAJob, lookingForAJobDescription, 
+  fullName, setEditMode } : any) => {
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
-  const onSaveProfileData = async (values, formik) => {
+  const onSaveProfileData = async (values: any, formik: any) => {
     formik.setSubmitting(true)
-    let response = await dispatch(setNewDataProfile(values))
+    let response: any = await dispatch(setNewDataProfile(values))
+    console.log(response)
     if (response.resultCode === 0) {
-      console.log(response)
       formik.setSubmitting(false)
       setEditMode(false)
     }else if(response.resultCode === 1){
-      response.messages.forEach((error) => {
+      response.messages.forEach((error: any) => {
         if(error.includes('Invalid url format (Contacts')){
           let nameError = "contacts." + error.slice(error.indexOf('>')+1, -1).toLowerCase()
           formik.setFieldError(nameError, "Invalid url Format")
@@ -90,7 +100,7 @@ const ProfileDataForm = ({ aboutMe, contacts, lookingForAJob, lookingForAJobDesc
       initialValues={{ aboutMe, contacts, lookingForAJob, lookingForAJobDescription, fullName }}
       onSubmit={onSaveProfileData}
     >
-      {({ isSubmitting, handleChange }) => (
+      {({ isSubmitting }) => (
         <Form>
           <button type="submit" className={s.editMode} disabled={isSubmitting}>Save</button>
           <div>

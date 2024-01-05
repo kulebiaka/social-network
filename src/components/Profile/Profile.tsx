@@ -6,18 +6,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProfile, getStatus } from '../../redux/profileReducer';
 import Preloader from '../common/Preloader';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 // import { profileAPI } from '../../API/api';
 
-const Profile = (props) => {
+const Profile = () => {
 
-  let state = useSelector(state => ({...state.profilePage, ...state.authSlice}))
-  debugger
-  let dispatch = useDispatch()
-  let userId = useParams().userId ?? state.id
-  let authId = useSelector(state => state.authSlice.id)
+  let state = useAppSelector(state => ({...state.profilePage, ...state.authSlice}))
+  let authId: number | null = useAppSelector(state => state.authSlice.id)
+  let userId: any = useParams().userId ?? state.id
   let isOwner = authId === userId
+  let dispatch = useAppDispatch()
   let navigate = useNavigate()
-  debugger
+  
   useEffect(() => {
     if(state.isAuth === false) {
       navigate('/login')

@@ -4,9 +4,9 @@ import { AnyAction } from "redux"
 
 export type LoginFormType = {
   email: string,
-  login: string,
   password: string,
-  captcha?: string
+  rememberMe: boolean,
+  captcha: string
 }
 
 export type ContactsType = {
@@ -20,14 +20,14 @@ export type ContactsType = {
   mainLink:string
 }
 
-export type ProfileUserType = {
+export interface ProfileUserType {
   aboutMe: string,
   contacts: ContactsType,
   lookingForAJob: boolean,
   lookingForAJobDescription: string,
   fullName: string,
   userId: number,
-  photos: PhotosType
+  photos: PhotosType | undefined | null
 }
 
 export type PostType = { 
@@ -47,7 +47,6 @@ export type UserType = {
   followed: boolean,
   status: string | null,
   photos: PhotosType,
-
 }
 
 export type AppThunkReturnType<ReturnType> = ThunkAction<

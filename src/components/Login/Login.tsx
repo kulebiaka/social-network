@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
 import s from './Login.module.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, FormikErrors, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { authAPI } from '../../API/api';
 import { getCaptcha, logIn, setUserIfLoggedIn } from '../../redux/authReducer';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { LoginFormType } from '../../types/types';
 
 
 const Login = () => {
 
-  const state = useSelector(state => ({ isAuth: state.authSlice.isAuth }))
+  const state = useAppSelector(state => ({ isAuth: state.authSlice.isAuth }))
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -23,12 +25,19 @@ const Login = () => {
 
 const LoginForm = () => {
 
-  const dispatch = useDispatch();
-  const captchaUrl = useSelector(state => state.authSlice.captchaUrl)
+  const dispatch = useAppDispatch();
+  const captchaUrl = useAppSelector(state => state.authSlice.captchaUrl)
   const navigate = useNavigate()
 
-  const loginFormValidation = values => {
-    const errors = {};
+  let initialValues: LoginFormType = {
+    email: '',
+    password: '',
+    rememberMe: false,
+    captcha: '',
+  }
+
+  const loginFormValidation = (values : LoginFormType) => {
+    let errors: FormikErrors<LoginFormType> = {};
     if (!values.email) {
       errors.email = 'required';
     } else if (
@@ -42,11 +51,12 @@ const LoginForm = () => {
     return errors;
   }
 
-  const onLoginFormSubmit = (values, formik) => {
+  const onLoginFormSubmit = (values: LoginFormType, formik: FormikHelpers<LoginFormType>) => {
+    debugger
     formik.setSubmitting(true)
 
     dispatch(logIn(values))
-      .then(response => {
+      .then((response: any) => {
         console.log(response)
         if (response.resultCode === 0) {
           dispatch(setUserIfLoggedIn())
@@ -55,7 +65,7 @@ const LoginForm = () => {
         } else if (response.resultCode === 1) {
           formik.setFieldValue('password', '')
             .then(() => {
-              formik.setFieldError('common', response.messages[0])
+              formik.setFieldError('rememberMe', response.messages[0])
             })
         } else {
           dispatch(getCaptcha())
@@ -67,12 +77,7 @@ const LoginForm = () => {
 
   return (<div className={s.loginForm}>
     <Formik
-      initialValues={{
-        email: '',
-        password: '',
-        rememberMe: false,
-        captcha: ''
-      }}
+      initialValues={initialValues}
       validate={loginFormValidation}
       onSubmit={onLoginFormSubmit}
     >
@@ -90,7 +95,7 @@ const LoginForm = () => {
             <label htmlFor="rememberMe">Remember me</label>
             <Field type="checkbox" name="rememberMe" className={s.field} />
           </div>
-          {errors.common && <div className={s.error}>{errors.common}</div>}
+          {errors.rememberMe && <div className={s.error}>{errors.rememberMe}</div>}
           {captchaUrl && <div>
             <img src={captchaUrl} alt="" />
             <Field type="text" name="captcha"></Field>

@@ -28,7 +28,7 @@ const Users = (props) => {
     <div className={s.container}>
       <h4>Users</h4>
       <Paginator elementsCount={state.allUsersCount} pageSize={state.pageSize}
-      currentPage={state.currentPage} setCurrentPage={setCurrentPage} 
+      currentPage={state.currentPage} setCurrentPage={(p) => {dispatch(setCurrentPage(p))}} 
       portionSize={10} />
       {state.isFetching ? <Preloader/> : <div className={s.users}>{usersComponents}</div>}
       {/* {state.isFetching ?
