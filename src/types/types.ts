@@ -49,10 +49,9 @@ export type UserType = {
   photos: PhotosType,
 }
 
-export type AppThunkReturnType<ReturnType> = ThunkAction<
+export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
   unknown,
   AnyAction
 >
-export type AppThunk = AppThunkReturnType<void>

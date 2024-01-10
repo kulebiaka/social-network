@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { authAPI } from "../API/api"
-import { AppThunk, AppThunkReturnType, LoginFormType } from "../types/types"
+import { AppThunk, LoginFormType } from "../types/types"
 
 let initialState = {
   id: null as number | null,
@@ -35,7 +35,7 @@ const authSlice = createSlice({
   }
 })
 
-export const setUserIfLoggedIn = () : AppThunkReturnType<any> => async (dispatch) => {
+export const setUserIfLoggedIn = () : AppThunk<any> => async (dispatch) => {
   let response = await authAPI.isUserLoggedIn()
   if (response.resultCode === 0) {
     dispatch(setAuthUserData(response))
@@ -43,7 +43,7 @@ export const setUserIfLoggedIn = () : AppThunkReturnType<any> => async (dispatch
   return response
 }
 
-export const logIn = (values: LoginFormType) : AppThunkReturnType<any> => async (dispatch) => {
+export const logIn = (values: LoginFormType) : AppThunk<any> => async (dispatch) => {
   let response = await authAPI.login(values)
   if (response.resultCode === 0) {
     dispatch(setUserIfLoggedIn())
