@@ -3,17 +3,18 @@ import s from './MyPosts.module.css';
 import Post from './Post/Post'
 import { addPost } from '../../../redux/profileReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, FormikHelpers } from 'formik';
 import Preloader from '../../common/Preloader';
+import { useAppSelector } from '../../../redux/store';
 
 
-const MyPosts = (props) => {
+const MyPosts = () => {
 
-  let state = useSelector(state => state.profilePage)
+  let state = useAppSelector(state => state.profilePage)
 
   if(!state.user) return <Preloader />
 
-  let postsComponents = state.posts.map(p => (<Post message={p.message} likesCount={p.likesCount} photoUrl={state?.user.photos.small}/>))
+  let postsComponents = state.posts.map(p => (<Post message={p.message} likesCount={p.likesCount} photoUrl={state?.user?.photos?.small}/>))
 
   return (
     <div className={s.posts_block}>
@@ -29,7 +30,9 @@ const AddPostForm = () => {
 
   const dispatch = useDispatch()
 
-  const onAddPostClick = (values, { setSubmitting }) => {
+  let initialState = {postText: ''}
+
+  const onAddPostClick = (values: typeof initialState, { setSubmitting } : FormikHelpers<typeof initialState>) => {
     dispatch(addPost(values.postText))
     setSubmitting(false)
     values.postText = ''
@@ -37,7 +40,7 @@ const AddPostForm = () => {
 
   return (
   <Formik
-    initialValues={{postText: ''}}
+    initialValues={initialState}
     onSubmit={onAddPostClick}
   >
     <Form>

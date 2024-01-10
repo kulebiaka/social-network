@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { AnyAction } from 'redux'
 
 type PropsType = {
   elementsCount: number,

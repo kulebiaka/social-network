@@ -2,12 +2,13 @@ import React from 'react';
 import s from './Navbar.module.css';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { useAppSelector } from '../../redux/store';
 // import Friends from './Friends/Friends'
 
 
-const Navbar = (props) => {
+const Navbar = () => {
 
-  let userId = useSelector(state => state.authSlice.id)
+  let userId = useAppSelector(state => state.authSlice.id)
 
   return (
     <nav className={s.nav}>

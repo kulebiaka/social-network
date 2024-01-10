@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { authAPI } from "../API/api"
 import { setUserIfLoggedIn } from "./authReducer"
-import { AppThunk, AppThunkReturnType } from "../types/types"
+import { AppThunk } from "../types/types"
 
 let initialState = {
   initialized: false

@@ -3,10 +3,8 @@ import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import { sendMessage } from '../../redux/dialogsReducer';
-import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Form, Formik, Field, FormikHelpers } from 'formik';
-import Preloader from '../common/Preloader';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 
 const Dialogs = () => {

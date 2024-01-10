@@ -1,13 +1,14 @@
 import React from "react";
 import s from './UserItem.module.css'
-import { useDispatch, useSelector } from "react-redux";
 import { follow, unfollow } from "./../../../redux/usersReducer"
 import { NavLink } from "react-router-dom";
 import ImgWithDefault from "../../common/ImgWithDefault";
+import { UserType } from "../../../types/types";
+import { useAppDispatch } from "../../../redux/store";
 
-const UserItem = (props) => {
+const UserItem = (props: {user: UserType, inFollowingProgress: Array<number>}) => {
 
-  let dispatch = useDispatch()
+  let dispatch = useAppDispatch()
 
   return (
   <div className={s.user} key={props.user.id}>

@@ -49,24 +49,17 @@ const profileSlice = createSlice({
 export const getProfile = (id: number) : AppThunk => async (dispatch) => {
   dispatch(setIsFetching(true))
   let data = await profileAPI.getProfile(id)
-  // .then(data => {
   dispatch(setUserProfile(data))
   dispatch(setIsFetching(false))
-  // })
 }
 
 export const getStatus = (id: number) : AppThunk => async (dispatch) => {
   let response = await profileAPI.getStatus(id)
-  // .then(response => {
   dispatch(setStatus(response.data))
-  // })
 }
 
 export const setNewStatus = (status: string) : AppThunk => async (dispatch) => {
   let response = await profileAPI.putNewStatus(status)
-  // .then(response => {
-  // console.log(response.data)
-  // })
   return response
 }
 

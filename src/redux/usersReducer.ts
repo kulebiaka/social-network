@@ -37,21 +37,9 @@ let usersSlice = createSlice({
   reducers: {
     followSuccess(state, action) {
       state.users = updateObjectInArrayById(state.users, action.payload, 'id', { followed: true })
-      // state.users = state.users.map((user) => {
-      //   if (action.payload === user.id) {
-      //     return { ...user, followed: true }
-      //   }
-      //   return user
-      // })
     },
     unfollowSuccess(state, action) {
       state.users = updateObjectInArrayById(state.users, action.payload, 'id', { followed: false })
-      // state.users = state.users.map((user) => {
-      //   if (action.payload === user.id) {
-      //     return { ...user, followed: false }
-      //   }
-      //   return user
-      // })
     },
     toggleInFollowingProgress(state, action: PayloadAction<ActionFollowingProgress>) {
       if (action.payload.isFetching === true) {
@@ -61,11 +49,7 @@ let usersSlice = createSlice({
       }
     },
     setUsers(state, action: PayloadAction<Array<UserType>>) {
-      // if (state.users.length === 0) {
-      //   state.users = action.payload
-      // } else {
       state.users = action.payload
-      // }
     },
     setCurrentPage(state, action: PayloadAction<number>) {
       state.currentPage = action.payload

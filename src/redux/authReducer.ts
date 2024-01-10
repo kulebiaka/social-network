@@ -37,23 +37,18 @@ const authSlice = createSlice({
 
 export const setUserIfLoggedIn = () : AppThunkReturnType<any> => async (dispatch) => {
   let response = await authAPI.isUserLoggedIn()
-  // .then(response => {
   if (response.resultCode === 0) {
     dispatch(setAuthUserData(response))
   }
-  // })
   return response
 }
 
 export const logIn = (values: LoginFormType) : AppThunkReturnType<any> => async (dispatch) => {
   let response = await authAPI.login(values)
-  // .then(response => {
-  // debugger
   if (response.resultCode === 0) {
     dispatch(setUserIfLoggedIn())
   }
   return response
-  // })
 }
 
 export const getCaptcha = () : AppThunk => async (dispatch) => {
@@ -63,10 +58,8 @@ export const getCaptcha = () : AppThunk => async (dispatch) => {
 
 export const logOut = () : AppThunk => async (dispatch) => {
   let response = await authAPI.logOut()
-  // .then(response => {
   console.log(response)
   dispatch(resetUser())
-  // })
 }
 
 export const { setAuthUserData, resetUser, getCaptchaUrlSuccess } = authSlice.actions

@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import s from './Login.module.css'
-import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, FormikErrors, Field, ErrorMessage, FormikHelpers } from 'formik';
-import { authAPI } from '../../API/api';
 import { getCaptcha, logIn, setUserIfLoggedIn } from '../../redux/authReducer';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/store';

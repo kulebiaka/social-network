@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import UserItem from "./UserItem/UserItem";
 import s from "./Users.module.css"
-import { useDispatch, useSelector } from "react-redux";
 import { setCurrentPage, setAllUsersCount, clearToInitialState, getUsers, getAllUsersCount } from "../../redux/usersReducer";
 import axios from "axios";
 import Preloader from "../common/Preloader";
 import { usersAPI } from "../../API/api";
 import Paginator from "../common/Paginator";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 
-const Users = (props) => {
+const Users = () => {
 
-  let dispatch = useDispatch()
-  let state = useSelector(state => state.usersPage)
+  let dispatch = useAppDispatch()
+  let state = useAppSelector(state => state.usersPage)
 
   useEffect(() => {
     dispatch(getAllUsersCount())
