@@ -12,9 +12,9 @@ const MyPosts = () => {
 
   let state = useAppSelector(state => state.profilePage)
 
-  if(!state.user) return <Preloader />
+  if (!state.user) return <Preloader />
 
-  let postsComponents = state.posts.map(p => (<Post message={p.message} likesCount={p.likesCount} photoUrl={state?.user?.photos?.small}/>))
+  let postsComponents = state.posts.map(p => (<Post message={p.message} likesCount={p.likesCount} photoUrl={state?.user?.photos?.small} />))
 
   return (
     <div className={s.posts_block}>
@@ -30,24 +30,24 @@ const AddPostForm = () => {
 
   const dispatch = useDispatch()
 
-  let initialState = {postText: ''}
+  const initialState = { postText: '' }
 
-  const onAddPostClick = (values: typeof initialState, { setSubmitting } : FormikHelpers<typeof initialState>) => {
+  const onAddPostClick = (values: typeof initialState, { setSubmitting }: FormikHelpers<typeof initialState>) => {
     dispatch(addPost(values.postText))
     setSubmitting(false)
     values.postText = ''
   }
 
   return (
-  <Formik
-    initialValues={initialState}
-    onSubmit={onAddPostClick}
-  >
-    <Form>
-      <Field as='textarea' name='postText'/>
-      <button>Add post</button>
-    </Form>
-  </Formik>
+    <Formik
+      initialValues={initialState}
+      onSubmit={onAddPostClick}
+    >
+      <Form>
+        <Field as='textarea' name='postText' />
+        <button>Add post</button>
+      </Form>
+    </Formik>
   )
 }
 

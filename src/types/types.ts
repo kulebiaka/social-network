@@ -9,16 +9,7 @@ export type LoginFormType = {
   captcha: string
 }
 
-export type ContactsType = {
-  facebook:string 
-  website:string
-  vk:string
-  twitter:string
-  instagram:string
-  youtube:string
-  github:string
-  mainLink:string
-}
+export type ContactsType = Record<string, string>
 
 export interface ProfileUserType {
   aboutMe: string,
@@ -27,10 +18,11 @@ export interface ProfileUserType {
   lookingForAJobDescription: string,
   fullName: string,
   userId: number,
-  photos: PhotosType | undefined | null
+  photos: PhotosType | undefined | null,
+  status?: string,
 }
 
-export type PostType = { 
+export type PostType = {
   id: number,
   message: string,
   likesCount: number

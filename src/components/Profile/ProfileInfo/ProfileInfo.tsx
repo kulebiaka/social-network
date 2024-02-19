@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import s from './ProfileInfo.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import Preloader from '../../common/Preloader';
 import ProfileStatus from './ProfileStatus';
 import ImgWithDefault from '../../common/ImgWithDefault';
@@ -9,11 +8,11 @@ import { Form, Formik, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
 import { ContactsType, ProfileUserType } from '../../../types/types';
 
-const ProfileInfo = ({status, isOwner}: {status: string, isOwner: boolean}) => {
+const ProfileInfo = ({ status = '', isOwner }: { status?: string, isOwner: boolean }) => {
 
-  let [editMode, setEditMode] = useState<boolean>(false)
-  let state = useAppSelector(state => ({ ...state.profilePage.user }))
-  let dispatch = useAppDispatch()
+  const [editMode, setEditMode] = useState<boolean>(false)
+  const state = useAppSelector(state => ({ ...state.profilePage.user }))
+  const dispatch = useAppDispatch()
 
   if (!state) return <Preloader />
 
@@ -35,7 +34,7 @@ const ProfileInfo = ({status, isOwner}: {status: string, isOwner: boolean}) => {
             {state.fullName}
           </h3>
           <div>
-            <ProfileStatus status={status} isOwner={isOwner}/>
+            <ProfileStatus status={status} isOwner={isOwner} />
           </div>
         </div>
       </div>
@@ -50,10 +49,10 @@ const ProfileInfo = ({status, isOwner}: {status: string, isOwner: boolean}) => {
   )
 }
 
-interface ProfileFormProps extends ProfileUserType{
-  setEditMode: (a: boolean) => void, 
+interface ProfileFormProps extends ProfileUserType {
+  setEditMode: (a: boolean) => void,
 }
-interface ProfileDataProps extends ProfileFormProps{
+interface ProfileDataProps extends ProfileFormProps {
   isOwner: boolean
 }
 
@@ -73,8 +72,7 @@ const ProfileData = ({ aboutMe, contacts, lookingForAJob, lookingForAJobDescript
 }
 
 
-const ProfileDataForm = ({ aboutMe, contacts, lookingForAJob, lookingForAJobDescription, 
-  fullName, setEditMode } : any) => {
+const ProfileDataForm = ({ aboutMe, contacts, lookingForAJob, lookingForAJobDescription, fullName, setEditMode }: any) => {
 
   const dispatch = useAppDispatch()
 
@@ -85,10 +83,10 @@ const ProfileDataForm = ({ aboutMe, contacts, lookingForAJob, lookingForAJobDesc
     if (response.resultCode === 0) {
       formik.setSubmitting(false)
       setEditMode(false)
-    }else if(response.resultCode === 1){
+    } else if (response.resultCode === 1) {
       response.messages.forEach((error: any) => {
-        if(error.includes('Invalid url format (Contacts')){
-          let nameError = "contacts." + error.slice(error.indexOf('>')+1, -1).toLowerCase()
+        if (error.includes('Invalid url format (Contacts')) {
+          let nameError = "contacts." + error.slice(error.indexOf('>') + 1, -1).toLowerCase()
           formik.setFieldError(nameError, "Invalid url Format")
         }
       })
@@ -109,7 +107,7 @@ const ProfileDataForm = ({ aboutMe, contacts, lookingForAJob, lookingForAJobDesc
             <div><b>Contacts:</b>
               <div style={{ paddingLeft: '10px' }}>
                 {contacts && Object.keys(contacts).map((key) => (<div>
-                  {key}: <Field key={key} type="text" name={`contacts.${key}`}></Field><ErrorMessage name={"contacts." + key}/>
+                  {key}: <Field key={key} type="text" name={`contacts.${key}`}></Field><ErrorMessage name={"contacts." + key} />
                 </div>))}
               </div>
             </div>

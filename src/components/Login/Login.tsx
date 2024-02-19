@@ -14,7 +14,7 @@ const Login = () => {
 
   useEffect(() => {
     if (state.isAuth) navigate(`/profile`)
-  })
+  }, [])
 
   return (<div className={s.container}>
     <LoginForm />
@@ -34,7 +34,7 @@ const LoginForm = () => {
     captcha: '',
   }
 
-  const loginFormValidation = (values : LoginFormType) => {
+  const loginFormValidation = (values: LoginFormType) => {
     let errors: FormikErrors<LoginFormType> = {};
     if (!values.email) {
       errors.email = 'required';
@@ -50,7 +50,6 @@ const LoginForm = () => {
   }
 
   const onLoginFormSubmit = (values: LoginFormType, formik: FormikHelpers<LoginFormType>) => {
-    debugger
     formik.setSubmitting(true)
 
     dispatch(logIn(values))

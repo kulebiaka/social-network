@@ -1,9 +1,16 @@
 import React from 'react';
 import s from './Navbar.module.css';
-import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../redux/store';
 // import Friends from './Friends/Friends'
+
+const links = [
+  { to: '/profile', title: 'Profile' },
+  { to: '/dialogs', title: 'Messages' },
+  { to: '/users', title: 'Users' },
+  { to: '/news', title: 'News' },
+  { to: '/settings', title: 'Settings' },
+]
 
 
 const Navbar = () => {
@@ -12,25 +19,10 @@ const Navbar = () => {
 
   return (
     <nav className={s.nav}>
-      <div className={s.item}>
-        <NavLink to='/profile'>Profile</NavLink>
-      </div>
-      <div className={s.item}>
-        <NavLink to='/dialogs'>Messages</NavLink>
-      </div>
-      <div className={s.item}>
-        <NavLink to='/users'>Users</NavLink>
-      </div>
-      <div className={s.item}>
-        <NavLink to='/news'>News</NavLink>
-      </div>
-      <div className={s.item}>
-        <NavLink to='/music'>Music</NavLink>
-      </div>
-      <div className={s.item}>
-        <NavLink to='/settings'>Settings</NavLink>
-      </div>
-
+      {links.map((l) =>
+      (<div className={s.item}>
+        <NavLink to={l.to}>{l.title}</NavLink>
+      </div>))}
       {/* <Friends state={props.state.friendsList}/> */}
     </nav>
   )

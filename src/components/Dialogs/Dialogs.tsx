@@ -10,16 +10,9 @@ import { useAppDispatch, useAppSelector } from '../../redux/store';
 const Dialogs = () => {
 
   let state = useAppSelector(state => ({ ...state.dialogsPage, isAuth: state.authSlice.isAuth }))
-  let navigate = useNavigate()
 
-  useEffect(() => {
-    if (state.isAuth === false) {
-      navigate('/login')
-    }
-  }, [])
-
-  let dialogsComponents = state.dialogs.map((d) => (<DialogItem userName={d.userName} id={d.id} />))
-  let messagesComponents = state.messages.map(m => (<Message message={m.message} avatar={m.avatar} />))
+  const dialogsComponents = state.dialogs.map((d) => (<DialogItem userName={d.userName} id={d.id} key={d.id} />))
+  const messagesComponents = state.messages.map(m => (<Message message={m.message} avatar={m.avatar} />))
 
   return (
     <div className={s.dialogs}>
@@ -44,7 +37,7 @@ const AddMessageForm = () => {
 
   const dispatch = useAppDispatch()
 
-  const onSendMessageClick = (values: ValuesType, { setSubmitting } : FormikHelpers<ValuesType>) => {
+  const onSendMessageClick = (values: ValuesType, { setSubmitting }: FormikHelpers<ValuesType>) => {
     dispatch(sendMessage(values.messageText))
     setSubmitting(false)
     // setFieldValue('messageText', '')
@@ -61,7 +54,7 @@ const AddMessageForm = () => {
     >
       {({ isSubmitting }) => (
         <Form>
-          <Field as="textarea" placeholder="Enter your message" name="messageText"/>
+          <Field as="textarea" placeholder="Enter your message" name="messageText" />
           <button type="submit" disabled={isSubmitting} >Send message</button>
         </Form>
       )}

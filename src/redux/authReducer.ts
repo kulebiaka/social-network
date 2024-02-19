@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { authAPI } from "../API/api"
+import { authAPI } from "../API/authApi"
 import { AppThunk, LoginFormType } from "../types/types"
 
 let initialState = {
@@ -27,7 +27,7 @@ const authSlice = createSlice({
       }
     },
     getCaptchaUrlSuccess(state, action) {
-      return{
+      return {
         ...state,
         captchaUrl: action.payload
       }
@@ -35,7 +35,7 @@ const authSlice = createSlice({
   }
 })
 
-export const setUserIfLoggedIn = () : AppThunk<any> => async (dispatch) => {
+export const setUserIfLoggedIn = (): AppThunk<any> => async (dispatch) => {
   let response = await authAPI.isUserLoggedIn()
   if (response.resultCode === 0) {
     dispatch(setAuthUserData(response))
@@ -43,7 +43,7 @@ export const setUserIfLoggedIn = () : AppThunk<any> => async (dispatch) => {
   return response
 }
 
-export const logIn = (values: LoginFormType) : AppThunk<any> => async (dispatch) => {
+export const logIn = (values: LoginFormType): AppThunk<any> => async (dispatch) => {
   let response = await authAPI.login(values)
   if (response.resultCode === 0) {
     dispatch(setUserIfLoggedIn())
@@ -51,12 +51,12 @@ export const logIn = (values: LoginFormType) : AppThunk<any> => async (dispatch)
   return response
 }
 
-export const getCaptcha = () : AppThunk => async (dispatch) => {
+export const getCaptcha = (): AppThunk => async (dispatch) => {
   let response = await authAPI.getCaptchaUrl()
   dispatch(getCaptchaUrlSuccess(response.url))
-} 
+}
 
-export const logOut = () : AppThunk => async (dispatch) => {
+export const logOut = (): AppThunk => async (dispatch) => {
   let response = await authAPI.logOut()
   console.log(response)
   dispatch(resetUser())

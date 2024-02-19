@@ -24,8 +24,8 @@ const dialogsSlice = createSlice({
   name: 'dialogsPage',
   initialState,
   reducers: {
-    sendMessage(state, action: PayloadAction<string>){
-      let newMessage = {
+    sendMessage(state, action: PayloadAction<string>) {
+      const newMessage = {
         id: (state.messages.length + 1),
         message: action.payload,
         avatar: "https://letsenhance.io/static/66c1b6abf8f7cf44c19185254d7adb0c/28ebd/AiArtBefore.jpg"

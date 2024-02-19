@@ -2,31 +2,28 @@ import React, { useEffect, useState } from 'react';
 import s from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo'
 import MyPosts from './MyPosts/MyPosts';
-import { useDispatch, useSelector } from 'react-redux';
-import { getProfile, getStatus } from '../../redux/profileReducer';
+import { getProfile } from '../../redux/profileReducer';
 import Preloader from '../common/Preloader';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
-// import { profileAPI } from '../../API/api';
 
 const Profile = () => {
 
-  let state = useAppSelector(state => ({...state.profilePage, ...state.authSlice}))
-  let authId: number | null = useAppSelector(state => state.authSlice.id)
-  let userId: any = useParams().userId ?? state.id
-  let isOwner = authId === userId
-  let dispatch = useAppDispatch()
-  let navigate = useNavigate()
-  
+  const state = useAppSelector(state => ({ ...state.profilePage, ...state.authSlice }))
+  const authId = useAppSelector(state => state.authSlice.id)
+  const userId: any = useParams().userId ?? state.id
+  const isOwner = authId === userId
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+
   useEffect(() => {
-    if(state.isAuth === false) {
+    if (state.isAuth === false) {
       navigate('/login')
       return
     }
 
-    if(userId === null) return
+    if (userId === null) return
 
-    dispatch(getStatus(userId))
     dispatch(getProfile(userId))
 
   }, [userId])
@@ -34,10 +31,14 @@ const Profile = () => {
 
   return (
     <div className={s.content}>
-      {state.isFetching ? <Preloader /> : (<><ProfileInfo status={state.status} isOwner={isOwner}/>
-        <MyPosts
-        // store={props.store}
-        /></>)}
+
+      {state.isFetching ?
+        <Preloader /> :
+        (<>
+          <ProfileInfo status={state.user.status} isOwner={isOwner} />
+          <MyPosts />
+        </>)}
+
     </div>
   )
 }
