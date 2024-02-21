@@ -1,25 +1,25 @@
 .nav {
   grid-area: n;
-  background-color: burlywood;
+  background-color: transparent;
   text-decoration: none;
   padding: 10px
 }
 
 .item {
-  color: white;
+  /* color: black; */
   /* padding: 5px; */
   cursor: pointer;
 }
 .item:hover{
-  background-color: aquamarine;
+  background-color: #dddddd;
 }
 .item a{
   width: 100%;
   height: 100%;
-  color: white;
+  color: black;
 }
 .item a:visited{
-  color: white;
+  color: black;
 }
 
 /* .active {

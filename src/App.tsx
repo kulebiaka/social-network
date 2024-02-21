@@ -33,21 +33,23 @@ const App = () => {
     <Router>
       <div className='app-wrapper'>
         <Header />
-        <Navbar />
-        <div className='app-wrapper-content'>
-          <Suspense fallback={'Loading...'}>
-            <Routes>
-              <Route path='/' element={<Navigate to="/profile" />}/>
-              <Route path='/login' element={<Login />} />
-              <Route path='/profile/:userId?' element={<Profile />} />
-              <Route path='/dialogs/*' element={<Dialogs />} />
-              <Route path='/users' element={<Users />} />
-              <Route path='/news' element={<News />} />
-              <Route path='/music' element={<Music />} />
-              <Route path='/settings' element={<Settings />} />
-              <Route path='/*' element={<Error />} />
-            </Routes>
-          </Suspense>
+        <div className='app-content-navbar'>
+          <Navbar />
+          <div className='app-wrapper-content'>
+            <Suspense fallback={'Loading...'}>
+              <Routes>
+                <Route path='/' element={<Navigate to="/profile" />} />
+                <Route path='/login' element={<Login />} />
+                <Route path='/profile/:userId?' element={<Profile />} />
+                <Route path='/dialogs/*' element={<Dialogs />} />
+                <Route path='/users' element={<Users />} />
+                <Route path='/news' element={<News />} />
+                <Route path='/music' element={<Music />} />
+                <Route path='/settings' element={<Settings />} />
+                <Route path='/*' element={<Error />} />
+              </Routes>
+            </Suspense>
+          </div>
         </div>
       </div>
     </Router>
