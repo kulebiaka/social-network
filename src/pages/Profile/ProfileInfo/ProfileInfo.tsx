@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import s from './ProfileInfo.module.css';
-import Preloader from '../../common/Preloader';
-import ProfileStatus from './ProfileStatus';
-import ImgWithDefault from '../../common/ImgWithDefault';
+import Preloader from '../../../components/Preloader/Preloader';
+import ProfileStatus from '../ProfileStatus/ProfileStatus';
+import ImgWithDefault from '../../../components/ImgWithDefault';
 import { setNewDataProfile, uploadNewPhoto } from '../../../redux/profileReducer';
 import { Form, Formik, Field, ErrorMessage, FormikHelpers } from 'formik';
-import { useAppDispatch, useAppSelector } from '../../../redux/store';
-import { ContactsType, ProfileUserType } from '../../../types/types';
+import { useAppDispatch, useAppSelector } from '../../../redux';
+import { ProfileUserType } from '../../../lib/types';
 
 const ProfileInfo = ({ status = '', isOwner }: { status?: string, isOwner: boolean }) => {
 
@@ -56,7 +56,7 @@ interface ProfileDataProps extends ProfileFormProps {
   isOwner: boolean
 }
 
-const ProfileData = ({ aboutMe, contacts, lookingForAJob, lookingForAJobDescription, fullName, setEditMode, isOwner }: any) => {
+const ProfileData = ({ aboutMe, contacts, lookingForAJob, lookingForAJobDescription, fullName, setEditMode, isOwner }: ProfileDataProps) => {
 
   return (<div>
     {isOwner && <button className={s.editMode} onClick={() => { setEditMode(true) }}>Edit</button>}

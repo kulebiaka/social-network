@@ -1,7 +1,7 @@
 import { usersAPI } from './../API/usersApi';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { updateObjectInArrayById } from "../utls/objectHelper"
-import { AppThunk, UserType } from "../types/types"
+import { updateObjectInArrayById } from "../lib/functions/objectHelper"
+import { AppThunk, UserType } from "../lib/types"
 
 type ActionFollowingProgress = {
   isFetching: boolean,

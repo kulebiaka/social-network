@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { profileAPI } from "../API/profileApi"
-import { AppThunk, ProfileUserType, PostType } from "../types/types"
+import { AppThunk, ProfileUserType, PostType } from "../lib/types"
 
 const initialState = {
   posts: [

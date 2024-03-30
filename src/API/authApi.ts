@@ -1,5 +1,5 @@
-import { LoginFormType } from './../types/types';
-import { server } from "./api"
+import { LoginFormType } from '../lib/types';
+import { server } from "."
 
 export const authAPI = {
   async isUserLoggedIn() {

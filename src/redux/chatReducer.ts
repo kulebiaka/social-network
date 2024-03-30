@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { chatAPI } from "../API/chatApi"
-import store, { AppDispatch } from "./store"
+import store, { AppDispatch } from "."
 
 export type MessageType = { 
   message: string,

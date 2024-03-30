@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { authAPI } from "../API/authApi"
-import { AppThunk, LoginFormType } from "../types/types"
+import { AppThunk, LoginFormType } from "../lib/types"
 
 let initialState = {
   id: null as number | null,

@@ -1,4 +1,4 @@
-import { server } from "./api"
+import { server } from "."
 
 export const usersAPI = {
   async getUsers(currentPage: number, pageSize: number, term?: string, friend?: boolean | string) {

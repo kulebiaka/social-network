@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import styles from './Pagiator.module.css'
-
 
 type PropsType = {
   elementsCount: number,
@@ -24,7 +22,7 @@ const Paginator = ({ elementsCount, pageSize, currentPage, setCurrentPage, porti
 
   let pagesComponents = pages.map(p => (<button key={p} disabled={p === currentPage} onClick={(e) => { setCurrentPage(p) }}>{p}</button>))
 
-  return (<div className={styles.paginator}>
+  return (<div>
     <button disabled={currentPortion === 1} onClick={() => { setCurrentPortion(n => n - 1) }}>Prev</button>
     <div>
       {pagesComponents}

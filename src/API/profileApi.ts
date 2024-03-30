@@ -1,5 +1,5 @@
-import { ProfileUserType } from './../types/types';
-import { server } from "./api"
+import { ProfileUserType } from '../lib/types';
+import { server } from "."
 
 export const profileAPI = {
   async getProfile(id: number) {

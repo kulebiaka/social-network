@@ -11,10 +11,10 @@ let initialState = {
   ],
 
   messages: [
-    { id: 1, message: 'Hi', avatar: 'https://letsenhance.io/static/66c1b6abf8f7cf44c19185254d7adb0c/28ebd/AiArtBefore.jpg' },
-    { id: 2, message: 'What`s up?', avatar: 'https://letsenhance.io/static/66c1b6abf8f7cf44c19185254d7adb0c/28ebd/AiArtBefore.jpg' },
-    { id: 3, message: 'Yo', avatar: 'https://letsenhance.io/static/66c1b6abf8f7cf44c19185254d7adb0c/28ebd/AiArtBefore.jpg' },
-    { id: 4, message: 'Ok', avatar: 'https://letsenhance.io/static/66c1b6abf8f7cf44c19185254d7adb0c/28ebd/AiArtBefore.jpg' },
+    { userId: 2, message: 'Hi', userName: 'Oleg' },
+    { userId: 2, message: 'Hi', userName: 'Oleg' },
+    { userId: 2, message: 'Hi', userName: 'Oleg' },
+    { userId: 2, message: 'Hi', userName: 'Oleg' },
   ],
 
   newMessageText: ''
@@ -26,12 +26,10 @@ const dialogsSlice = createSlice({
   reducers: {
     sendMessage(state, action: PayloadAction<string>) {
       const newMessage = {
-        id: (state.messages.length + 1),
         message: action.payload,
-        avatar: "https://letsenhance.io/static/66c1b6abf8f7cf44c19185254d7adb0c/28ebd/AiArtBefore.jpg"
       }
       state.newMessageText = '';
-      state.messages.push(newMessage)
+      // state.messages.push(newMessage)
     },
   }
 })

@@ -1,12 +1,12 @@
 import React, { useEffect, useLayoutEffect } from "react";
 import UserItem from "./UserItem/UserItem";
 import s from "./Users.module.css"
-import { setCurrentPage, resetUsers, getUsers, setFilter, SearchFilterType } from "../../redux/usersReducer";
-import Preloader from "../common/Preloader";
-import Paginator from "../common/Paginator";
-import { useAppDispatch, useAppSelector } from "../../redux/store";
-import { Field, Form, Formik, FormikHelpers } from "formik";
+import { setCurrentPage, resetUsers, getUsers, setFilter } from "../../redux/usersReducer";
+import Preloader from "../../components/Preloader/Preloader";
+import Paginator from "./../../components/Paginator";
+import { useAppDispatch, useAppSelector } from "../../redux";
 import { useSearchParams } from "react-router-dom";
+import { SearchForm } from "./UsersSearchForm";
 
 const Users = () => {
 
@@ -27,7 +27,6 @@ const Users = () => {
     let term = searchParams.get('term') ?? searchFilter.term
     let friend = searchParams.get('friend') ?? searchFilter.friend
 
-
     if (actualPage !== currentPage) dispatch(setCurrentPage(actualPage))
     if ((term !== searchFilter.term) || (friend !== searchFilter.friend)) {
       dispatch(setFilter({ term, friend }))
@@ -35,7 +34,7 @@ const Users = () => {
 
     dispatch(getUsers(actualPage, pageSize, term, friend))
 
-    // return () => { dispatch(resetUsers()) }
+    return () => { dispatch(resetUsers()) }
   }, [])
 
   useEffect(() => {
@@ -57,41 +56,6 @@ const Users = () => {
       {isFetching ? <Preloader /> : <div className={s.users}>{usersComponents}</div>}
     </div>
   )
-}
-
-const SearchForm = ({ pageSize, friend, term }: any) => {
-
-  const dispatch = useAppDispatch()
-
-  const initialValues: SearchFilterType = { term: term, friend: friend, }
-
-  const submit = async (values: SearchFilterType, actions: FormikHelpers<SearchFilterType>) => {
-    actions.setSubmitting(true)
-    dispatch(setFilter(values))
-    dispatch(setCurrentPage(1))
-    const res = await dispatch(getUsers(1, pageSize, values.term, values.friend))
-    actions.setSubmitting(false)
-  }
-
-  return (<div>
-    <Formik
-      enableReinitialize
-      initialValues={initialValues}
-      onSubmit={submit}
-    >
-      {({ isSubmitting, values, setValues }) => (
-        <Form>
-          <Field type="text" name="term" />
-          <Field component="select" name="friend">
-            <option value="null">All</option>
-            <option value="true">Only friends</option>
-            <option value="false">Not friends</option>
-          </Field>
-          <button type="submit" disabled={isSubmitting}>Find</button>
-        </Form>
-      )}
-    </Formik>
-  </div>)
 }
 
 export default Users;

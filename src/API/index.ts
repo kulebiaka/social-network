@@ -9,7 +9,3 @@ export const server = axios.create({
     'API-KEY': '16d4c253-80d5-4183-b659-e3879f448d28'
   }
 })
-
-
-
-

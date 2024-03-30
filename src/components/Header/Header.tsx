@@ -3,7 +3,7 @@ import s from './Header.module.css';
 import axios from 'axios';
 import { logOut } from '../../redux/authReducer';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { useAppDispatch, useAppSelector } from '../../redux';
 
 const Header = () => {
 

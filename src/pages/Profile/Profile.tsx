@@ -3,9 +3,9 @@ import s from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo'
 import MyPosts from './MyPosts/MyPosts';
 import { getProfile } from '../../redux/profileReducer';
-import Preloader from '../common/Preloader';
+import Preloader from '../../components/Preloader/Preloader';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { useAppDispatch, useAppSelector } from '../../redux';
 
 const Profile = () => {
 
@@ -21,11 +21,8 @@ const Profile = () => {
       navigate('/login')
       return
     }
-
     if (userId === null) return
-
     dispatch(getProfile(userId))
-
   }, [userId])
 
 

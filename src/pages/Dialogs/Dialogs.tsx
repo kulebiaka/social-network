@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
-import Message from './Message/Message';
+import Message from '../../components/Message';
 import { sendMessage } from '../../redux/dialogsReducer';
 import { useNavigate } from 'react-router-dom';
 import { Form, Formik, Field, FormikHelpers } from 'formik';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { useAppDispatch, useAppSelector } from '../../redux';
 
 const Dialogs = () => {
 
   let state = useAppSelector(state => ({ ...state.dialogsPage, isAuth: state.authSlice.isAuth }))
 
   const dialogsComponents = state.dialogs.map((d) => (<DialogItem userName={d.userName} id={d.id} key={d.id} />))
-  const messagesComponents = state.messages.map(m => (<Message message={m.message} avatar={m.avatar} />))
+  const messagesComponents = state.messages.map(m => (<Message message={m} />))
 
   return (
     <div className={s.dialogs}>

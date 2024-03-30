@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { setNewStatus } from "../../../redux/profileReducer";
-import { useAppDispatch } from "../../../redux/store";
+import { useAppDispatch } from "../../../redux";
 
 const ProfileStatus = (props: { status: string, isOwner: boolean }) => {
 

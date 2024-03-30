@@ -1,5 +1,5 @@
 let ws: WebSocket | null = null;
-let subscribers: Record<EventsType, SubscriberType[]> = {
+const subscribers: Record<EventsType, SubscriberType[]> = {
   'messagesRecieved': [],
   'statusChanged': [],
 };
