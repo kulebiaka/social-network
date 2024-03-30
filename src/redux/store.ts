@@ -6,6 +6,7 @@ import usersReducer from "./usersReducer"
 import authReducer from "./authReducer"
 import appReducer from "./appReducer"
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux"
+import chatReducer from "./chatReducer"
 
 let store = configureStore({
   reducer:{
@@ -15,6 +16,7 @@ let store = configureStore({
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
     sidebar: sidebarReducer,
+    chat: chatReducer
   }
 })
 

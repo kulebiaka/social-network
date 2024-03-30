@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import s from './Header.module.css';
 import axios from 'axios';
 import { logOut } from '../../redux/authReducer';
@@ -18,15 +18,17 @@ const Header = () => {
   }
 
   return <header className={s.header}>
-    <img src='https://www.freelogodesign.org/Content/img/logo-ex-7.png' />
-    <div>
-      {isAuth ?
-        <div>
-          {login} <br />
-          <button onClick={onLogOutClick}>log out</button>
-        </div> :
-        <NavLink to='/login'>log in</NavLink >
-      }
+    <div className={s.header_inner}>
+      <img src='./assets/some.png' />
+      <div>
+        {isAuth ?
+          <div>
+            {login} <br />
+            <button onClick={onLogOutClick}>log out</button>
+          </div> :
+          <NavLink to='/login'>log in</NavLink >
+        }
+      </div>
     </div>
   </header>
 }

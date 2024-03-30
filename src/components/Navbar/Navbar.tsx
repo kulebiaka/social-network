@@ -8,6 +8,7 @@ const links = [
   { to: '/profile', title: 'Profile' },
   { to: '/dialogs', title: 'Messages' },
   { to: '/users', title: 'Users' },
+  { to: '/chat', title: 'Group' },
   { to: '/news', title: 'News' },
   { to: '/settings', title: 'Settings' },
 ]

@@ -12,6 +12,7 @@ import Login from './components/Login/Login';
 import { initializeApp } from './redux/appReducer';
 import store, { useAppDispatch, useAppSelector } from './redux/store'
 import { Provider } from 'react-redux';
+import Chat from './components/Chat/Chat';
 
 const News = lazy(() => import('./components/News/News'))
 const Music = lazy(() => import('./components/Music/Music'))
@@ -42,6 +43,7 @@ const App = () => {
                 <Route path='/login' element={<Login />} />
                 <Route path='/profile/:userId?' element={<Profile />} />
                 <Route path='/dialogs/*' element={<Dialogs />} />
+                <Route path='/chat' element={<Chat />} />
                 <Route path='/users' element={<Users />} />
                 <Route path='/news' element={<News />} />
                 <Route path='/music' element={<Music />} />
