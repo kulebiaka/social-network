@@ -12,5 +12,9 @@ export const dialogsApi = {
   async sendMessage(id: any, message: string) {
     return server.post(`/dialogs/${id}/messages`, { body: message })
       .then(response => response.data)
+  },
+  async createDialog(id: any) {
+    return server.put(`/dialogs/${id}`)
+      .then(response => response.data)
   }
 }

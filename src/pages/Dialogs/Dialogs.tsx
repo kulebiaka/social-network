@@ -3,12 +3,13 @@ import s from './Dialogs.module.css';
 import DialogPreview from './DialogPreview/DialogPreview';
 import { getDialogById, getDialogs, setDialog } from '../../redux/dialogsReducer';
 import { useAppDispatch, useAppSelector } from '../../redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Dialog from './Dialog/Dialog';
 
 const Dialogs = () => {
 
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const userId = useParams().userId
 
   const state = useAppSelector(state => ({ ...state.dialogsPage, isAuth: state.authSlice.isAuth }))
@@ -16,6 +17,10 @@ const Dialogs = () => {
   const dialogsComponents = state.dialogs.map((d) => (<DialogPreview dialog={d}  key={d.id} />))
 
   useEffect(() => {
+    if(!state.isAuth) {
+      navigate('/login')
+      return
+    }
     dispatch(getDialogs())
   }, [])
 

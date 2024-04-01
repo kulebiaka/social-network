@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from './ProfileStatus.module.css'
 import { setNewStatus } from "../../../redux/profileReducer";
 import { useAppDispatch } from "../../../redux";
 
@@ -21,17 +22,15 @@ const ProfileStatus = (props: { status: string, isOwner: boolean }) => {
     setStatus(e.target.value)
   }
 
-  return (<>
+  return (
+      (<div className={styles.container}>
     {editMode && props.isOwner ?
-      (<div>
         <input type="text" autoFocus={true} onChange={onInputStatusChange} onBlur={deactivateEditMode} value={status} />
+        :
+        <span className={styles.status} onDoubleClick={activateEditMode}>{status || '---'}</span>
+      }
       </div>)
-      :
-      (<div >
-        <span onDoubleClick={activateEditMode}>{status || '---'}</span>
-      </div>)
-    }
-  </>)
+)
 }
 
 export default ProfileStatus

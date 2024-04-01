@@ -27,6 +27,10 @@ const dialogsSlice = createSlice({
       state.messages = action.payload
     },
 
+    addMessageToDialog(state, action: PayloadAction<any>){
+      state.messages = [...state.messages, action.payload]
+    },
+
     sendMessage(state, action: PayloadAction<string>) {
       debugger
       const newMessage = {
@@ -51,10 +55,15 @@ export const getDialogById = (id: number | string) => async (dispatch: AppDispat
 
 export const sendMessage = (id: any, message: string) => async (dispatch: AppDispatch) => {
   const response = await dialogsApi.sendMessage(id, message) 
-  setDialog(response)
+  dispatch(addMessageToDialog(response))
   return response
 }
 
-export const { setDialogs, setDialog, setDialogMessages } = dialogsSlice.actions
+export const startChat = (id: any) => async (dispatch:AppDispatch) => {
+  const response = await dialogsApi.createDialog(id)
+  return response
+}
+
+export const { setDialogs, setDialog, setDialogMessages, addMessageToDialog } = dialogsSlice.actions
 
 export default dialogsSlice.reducer

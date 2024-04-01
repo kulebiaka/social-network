@@ -7,14 +7,23 @@ import { setNewDataProfile, uploadNewPhoto } from '../../../redux/profileReducer
 import { Form, Formik, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { useAppDispatch, useAppSelector } from '../../../redux';
 import { ProfileUserType } from '../../../lib/types';
+import { Button } from 'antd';
+import { startChat } from '../../../redux/dialogsReducer';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileInfo = ({ status = '', isOwner }: { status?: string, isOwner: boolean }) => {
 
   const [editMode, setEditMode] = useState<boolean>(false)
   const state = useAppSelector(state => ({ ...state.profilePage.user }))
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   if (!state) return <Preloader />
+
+  const onStartChat = () => {
+    dispatch(startChat(state.userId))
+      .then(() => navigate(`/dialogs/${state.userId}`))
+  }
 
   const onUploadNewPhoto = (e: any) => {
     if (e.target.files.length) {
@@ -36,6 +45,7 @@ const ProfileInfo = ({ status = '', isOwner }: { status?: string, isOwner: boole
           <div>
             <ProfileStatus status={status} isOwner={isOwner} />
           </div>
+          {!isOwner && <Button onClick={onStartChat}>Start chat</Button>}
         </div>
       </div>
 

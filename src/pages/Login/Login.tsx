@@ -12,7 +12,7 @@ const Login = () => {
 
   useEffect(() => {
     if (state.isAuth) navigate(`/profile`)
-  }, [])
+  }, [state])
 
   return (<div className={s.container}>
     <LoginForm />

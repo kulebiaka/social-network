@@ -1,0 +1,11 @@
+.container{
+  margin: 10px 0;
+}
+.status{
+  padding: 5px;
+  border-radius: 5px;
+  cursor: default
+}
+.status:hover{
+  background-color: #bdbdbd;
+}
