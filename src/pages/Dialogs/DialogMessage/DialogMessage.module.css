@@ -1,0 +1,21 @@
+.head{
+  display: flex;
+  align-items: center;
+  padding: 10px;
+
+}
+.reverse_head{
+  flex-direction: row-reverse;
+}
+.name{
+  /* width: 100%; */
+  margin-left: 10px;
+  line-height: 32px;
+}
+.message_body{
+  margin-left: 50px
+}
+.date{
+  font-size: 12px;
+  margin-left: 10px;
+}

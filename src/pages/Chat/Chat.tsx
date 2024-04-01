@@ -6,6 +6,7 @@ import { Avatar, Space } from 'antd';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import Message from '../../components/Message';
+import AddMessageForm from '../../components/AddMessageForm';
 
 
 
@@ -20,18 +21,23 @@ const Chat = () => {
     return () => dispatch(resetConnection())
   }, [])
 
-  const onSendMessageClick = (values: any, { setSubmitting }: FormikHelpers<any>) => {
-    dispatch(sendMessage(values.messageText))
-    setSubmitting(false)
-    values.messageText = ''
+  // const onSendMessageClick = (values: any, { setSubmitting }: FormikHelpers<any>) => {
+  //   dispatch(sendMessage(values.messageText))
+  //   setSubmitting(false)
+  //   values.messageText = ''
+  // }
+
+  const onSendMessage = (message: string) => {
+    return dispatch(sendMessage(message))
   }
 
   return (
-    <div>
+    <div className='app-content-container'>
       <div style={{ height: '70vh', overflowY: 'auto', marginBottom: '5px', }}>
         {messages?.map((m, index) => <Message key={index} message={m} />)}
+        {messages.length === 0 && <p style={{lineHeight:'75vh', textAlign:'center'}}>There is no messages yet.</p>}
       </div>
-      <div style={{ padding: '20px 0 0', borderTop: '1px solid #ccc' }}>
+      {/* <div style={{ padding: '20px 0 0', borderTop: '1px solid #ccc' }}>
         <Formik
           initialValues={{
             messageText: '',
@@ -45,7 +51,8 @@ const Chat = () => {
             </Form>
           )}
         </Formik>
-      </div>
+      </div> */}
+      <AddMessageForm sendMessage={onSendMessage}/>
     </div>
   )
 }

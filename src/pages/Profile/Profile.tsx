@@ -27,13 +27,13 @@ const Profile = () => {
 
 
   return (
-    <div className={s.content}>
+    <div className={s.content + ' app-content-container'}>
 
       {state.isFetching ?
         <Preloader /> :
         (<>
           <ProfileInfo status={state.user.status} isOwner={isOwner} />
-          <MyPosts />
+          {/* <MyPosts /> */}
         </>)}
 
     </div>

@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import ImgWithDefault from "./../../../components/ImgWithDefault";
 import { UserType } from "../../../lib/types";
 import { useAppDispatch } from "../../../redux";
+import { Button } from "antd";
 
 type PropsType = { 
   user: UserType, 
@@ -23,22 +24,18 @@ const UserItem = (props: PropsType) => {
       </NavLink>
 
       {props.user.followed ?
-        <button disabled={props.inFollowingProgress.includes(props.user.id)}
+        <Button disabled={props.inFollowingProgress.includes(props.user.id)}
           className={s.follow} onClick={() => { dispatch(unfollow(props.user.id)) }}>
           Unfollow
-        </button> :
-        <button disabled={props.inFollowingProgress.includes(props.user.id)}
+        </Button> :
+        <Button disabled={props.inFollowingProgress.includes(props.user.id)}
           className={s.follow} onClick={() => { dispatch(follow(props.user.id)) }}>
           Follow
-        </button>}
+        </Button>}
 
       <div className={s.description}>
         <div className={s.username}>{props.user.name}</div>
         <div className={s.status}>{props.user.status}</div>
-        <div className={s.location}>
-          {/* {props.user.location.country}, {props.user.location.city} */}
-          location
-        </div>
       </div>
     </div>
   )

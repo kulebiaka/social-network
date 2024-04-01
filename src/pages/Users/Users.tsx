@@ -44,7 +44,7 @@ const Users = () => {
   const usersComponents = users.map(user => (<UserItem inFollowingProgress={inFollowingProgress} user={user} key={user.id} />))
 
   return (
-    <div className={s.container}>
+    <div className={s.container + ' app-content-container'}>
       <h4>Users</h4>
       <SearchForm pageSize={pageSize} term={searchFilter.term} friend={searchFilter.friend} />
       <Paginator elementsCount={usersCount} pageSize={pageSize}

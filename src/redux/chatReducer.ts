@@ -22,9 +22,6 @@ const chatSlice = createSlice({
     setMessages(state, action){
       state.messages = [...state.messages, ...action.payload]
     },
-    sendMessage(state, action: PayloadAction<string>) {
-      chatAPI.sendMessage(action.payload)
-    },
     resetMessages(state){
       state.messages = []
     }
@@ -43,6 +40,10 @@ export const resetConnection = () => (dispatch: AppDispatch) =>  {
   dispatch(resetMessages())
 }
 
-export const { setMessages, sendMessage, resetMessages } = chatSlice.actions
+export const sendMessage = (message: string) => async () => {
+  return chatAPI.sendMessage(message)
+}
+
+export const { setMessages, resetMessages } = chatSlice.actions
 
 export default chatSlice.reducer

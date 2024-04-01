@@ -20,7 +20,10 @@
 
 .app-wrapper-content{
   /* grid-area: c; */
-  width: 1000px;
+  width: 100%;
+}
+
+.app-content-container{
   overflow: hidden;
   padding: 10px;
   border-radius: 10px;

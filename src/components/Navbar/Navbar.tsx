@@ -1,30 +1,28 @@
 import React from 'react';
 import s from './Navbar.module.css';
 import { NavLink } from 'react-router-dom';
-import { useAppSelector } from '../../redux';
-// import Friends from './Friends/Friends'
-
+import { BarsOutlined, IdcardOutlined, TeamOutlined, MessageOutlined } from '@ant-design/icons'
 const links = [
-  { to: '/profile', title: 'Profile' },
-  { to: '/dialogs', title: 'Messages' },
-  { to: '/users', title: 'Users' },
-  { to: '/chat', title: 'Group' },
-  { to: '/news', title: 'News' },
-  { to: '/settings', title: 'Settings' },
+  { to: '/profile', label: 'Profile', children: <IdcardOutlined /> },
+  { to: '/dialogs', label: 'Messages', children: <BarsOutlined /> },
+  { to: '/chat', label: 'Group', children: <MessageOutlined /> },
+  { to: '/users', label: 'Users', children: <TeamOutlined /> },
+  // { to: '/news', label: 'News' },
+  // { to: '/settings', label: 'Settings' },
 ]
 
 
 const Navbar = () => {
-
-  let userId = useAppSelector(state => state.authSlice.id)
-
   return (
     <nav className={s.nav}>
       {links.map((l) =>
-      (<div className={s.item}>
-        <NavLink to={l.to}>{l.title}</NavLink>
-      </div>))}
-      {/* <Friends state={props.state.friendsList}/> */}
+        // (<div className={s.item}>
+        <NavLink className={s.item} to={l.to}>
+          <span className={s.icon}>{l.children}</span>
+          <span>{l.label}</span>
+        </NavLink>
+        // </div>)
+      )}
     </nav>
   )
 }
