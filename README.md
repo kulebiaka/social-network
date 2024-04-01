@@ -22,15 +22,15 @@ Access the application through your web browser at http://localhost:3000.
 ## Features:
 The Social Network project includes the following features:
 
-User authentication
-User profiles with customizable information
-Friend connections
-Messaging system 
+- User authentication
+- User profiles with customizable information
+- Friend connections
+- Messaging system 
 
 ## Project's structure
 - `/public`: Static assets and the HTML template.
 - `/src`: React application source code.
-  - `API`: Setup 
+  - `/API`: Setup Axios.
   - `/components`: UI components.
   - `/redux`: Reducers and setup for the redux.
   - `/utls`: Reusable functions, hooks and etc.
