@@ -43,9 +43,3 @@ The Social Network project includes the following features:
 #### TypeScript - a strongly typed programming language that builds on JavaScript
 #### AntDesign - the library of UI components
 #### Axios - a promise-based HTTP Client
-
-## Contributing:
-We welcome contributions from the community to improve the Social Network project. If you find any issues or have suggestions for enhancements, please open an issue on GitHub. Pull requests are also appreciated. Please review our contribution guidelines before making any contributions.
-
-## License:
-The Social Network project is licensed under the MIT License. You are free to use, modify, and distribute this software. See the LICENSE file for more details.
